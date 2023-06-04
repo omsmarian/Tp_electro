@@ -9,6 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtGui import QDoubleValidator, QValidator
 
 
 class Ui_Ploter(object):
@@ -78,8 +79,11 @@ class Ui_Ploter(object):
         self.labelR.setText(_translate("Ploter", "Polos:"))
         
         self.pushButton.setText(_translate("Ploter", "PushButton"))
+        self.floatvalidator()
         self.lineEditL.returnPressed.connect(lambda: print(self.lineEditL.text()))
         self.lineEditR.returnPressed.connect(lambda: print(self.lineEditR.text()))
+        self.pushButton.clicked.connect(lambda: print("nashe"))
+        
     
     
     #Lee la el index y cambia el valor del index
@@ -100,6 +104,10 @@ class Ui_Ploter(object):
         self.labelR.adjustSize()
         self.LabelL.adjustSize()
     
+    def floatvalidator(self):
+        self.onlyfloat = QDoubleValidator(-1000000000,1000000000,1000000000)
+        self.lineEditL.setValidator(self.onlyfloat)
+        self.lineEditR.setValidator(self.onlyfloat)
 
 if __name__ == "__main__":
     import sys
