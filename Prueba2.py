@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'prueba.ui'
+# Form implementation generated from reading ui file 'Prueba2.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #
@@ -10,73 +10,74 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QDoubleValidator, QValidator
+import random
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy import signal
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 
 
-
- 
-
 class Ui_Ploter(object):
     def setupUi(self, Ploter):
         Ploter.setObjectName("Ploter")
-        Ploter.resize(485, 297)
+        Ploter.resize(691, 444)
         self.centralwidget = QtWidgets.QWidget(Ploter)
         self.centralwidget.setObjectName("centralwidget")
-        self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.centralwidget)
-        self.verticalLayout_2.setObjectName("verticalLayout_2")
-        self.verticalLayout = QtWidgets.QVBoxLayout()
+        self.frame = QtWidgets.QFrame(self.centralwidget)
+        self.frame.setGeometry(QtCore.QRect(330, 20, 341, 411))
+        self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame.setObjectName("frame")
+        
+        #creo horizontalLayout
+        self.horizontalLayout_3 = QtWidgets.QHBoxLayout(self.frame)
+        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
+        #creo canvas
+        self.figure = plt.figure()
+        self.canvas = FigureCanvas(self.figure)
+        #agrego canvas
+        self.horizontalLayout_3.addWidget(self.canvas)
+        
+        self.widget = QtWidgets.QWidget(self.centralwidget)
+        self.widget.setGeometry(QtCore.QRect(50, 130, 183, 125))
+        self.widget.setObjectName("widget")
+        
+        self.verticalLayout = QtWidgets.QVBoxLayout(self.widget)
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setObjectName("verticalLayout")
         
-        self.comboBox = QtWidgets.QComboBox(self.centralwidget)
+        self.comboBox = QtWidgets.QComboBox(self.widget)
         self.comboBox.setObjectName("comboBox")
-        self.comboBox.addItem("")   # 0 es primer orden
-        self.comboBox.addItem("")   # 1 es segundo orden
-        self.comboBox.addItem("")   # 2 es orden superior
+        self.comboBox.addItem("")   #0 es primer orden
+        self.comboBox.addItem("")   #1 es segundo orden
+        self.comboBox.addItem("")   #2 es orden superior
         self.verticalLayout.addWidget(self.comboBox)
-        self.horizontalLayout = QtWidgets.QHBoxLayout()
-        self.horizontalLayout.setObjectName("horizontalLayout")
         
-        self.LabelL = QtWidgets.QLabel(self.centralwidget)
-        self.LabelL.setObjectName("LabelL")
-        
-        self.horizontalLayout.addWidget(self.LabelL)
-        
-        self.lineEditL = QtWidgets.QLineEdit(self.centralwidget)
-        self.lineEditL.setObjectName("lineEditL")
-        
-        self.horizontalLayout.addWidget(self.lineEditL)
-        self.verticalLayout.addLayout(self.horizontalLayout)
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         
-        self.labelR = QtWidgets.QLabel(self.centralwidget)
-        self.labelR.setObjectName("labelR")
+        self.LabelL = QtWidgets.QLabel(self.widget)
+        self.LabelL.setObjectName("LabelL")
+        self.horizontalLayout_2.addWidget(self.LabelL)
         
-        self.horizontalLayout_2.addWidget(self.labelR)
+        self.lineEditL = QtWidgets.QLineEdit(self.widget)
+        self.lineEditL.setObjectName("lineEditL")
+        self.horizontalLayout_2.addWidget(self.lineEditL)
         
-        self.lineEditR = QtWidgets.QLineEdit(self.centralwidget)
-        self.lineEditR.setObjectName("lineEditR")
-        
-        self.horizontalLayout_2.addWidget(self.lineEditR)
         self.verticalLayout.addLayout(self.horizontalLayout_2)
+        self.horizontalLayout = QtWidgets.QHBoxLayout()
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.labelR = QtWidgets.QLabel(self.widget)
+        self.labelR.setObjectName("labelR")
+        self.horizontalLayout.addWidget(self.labelR)
+        self.lineEditR = QtWidgets.QLineEdit(self.widget)
+        self.lineEditR.setObjectName("lineEditR")
+        self.horizontalLayout.addWidget(self.lineEditR)
+        self.verticalLayout.addLayout(self.horizontalLayout)
         
-        self.pushButton = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton = QtWidgets.QPushButton(self.widget)
         self.pushButton.setObjectName("pushButton")
-        
         self.verticalLayout.addWidget(self.pushButton)
-        self.verticalLayout_2.addLayout(self.verticalLayout)
-        #creando un verticalLayout
-        self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.centralwidget)
-        self.verticalLayout_3.setObjectName("verticalLayout_3")
-        #creando canvas
-        self.figure = plt.figure()
-        self.canvas = FigureCanvas(self.figure)
-        #agrego el canvas
-        self.verticalLayout_3.addWidget(self.canvas)
-        
         Ploter.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(Ploter)
@@ -88,21 +89,18 @@ class Ui_Ploter(object):
         self.comboBox.setItemText(0, _translate("Ploter", "Pimer orden"))
         self.comboBox.setItemText(1, _translate("Ploter", "Segundo orden"))
         self.comboBox.setItemText(2, _translate("Ploter", "Orden superior"))
+        #conecto con el selector y extraigo el index
         self.comboBox.activated.connect(self.getIndex)
         
         self.LabelL.setText(_translate("Ploter", "Cero:"))
-        
         self.labelR.setText(_translate("Ploter", "Polos:"))
         
-        self.pushButton.setText(_translate("Ploter", "OK"))
-        self.low_pass_1()
+        self.pushButton.setText(_translate("Ploter", "Ok"))
         self.floatvalidator()
-        self.lineEditL.returnPressed.connect(lambda: print(self.lineEditL.text()))
+        self.lineEditL.returnPressed.connect(lambda: self.getnum())
         self.lineEditR.returnPressed.connect(lambda: print(self.lineEditR.text()))
-        self.pushButton.clicked.connect(lambda: print("nashe"))
-        
-    
-    
+        self.pushButton.clicked.connect(lambda: self.plot())
+
     #Lee la el index y cambia el valor del index
     def getIndex(self):
         if self.comboBox.currentIndex() == 1:
@@ -126,25 +124,25 @@ class Ui_Ploter(object):
         self.onlyfloat = QDoubleValidator(-1000000000,1000000000,1000000000)
         self.lineEditL.setValidator(self.onlyfloat)
         self.lineEditR.setValidator(self.onlyfloat)
-        
-    #def plot_bode(w, y):
-    #    plt.semilogx(w, y)
-    #    plt.grid()
-    #    plt.tight_layout()
-    #    plt.draw()
-
-    #1 Order Filters
-    def low_pass_1 (self):
-        num = [0, 0, 1]
-        den = [0, 100, 0]
+    
+    def plot(self):
+        self.figure.clear()
+        wp = random.randint(1,52000)
+        wo = random.randint(33000,52000)
+        num = [1, wo]
+        den = [1, wp]
 
         sys = signal.TransferFunction(num, den)
         w, Hdb, phi = signal.bode(sys)
-
         plt.semilogx(w, Hdb)
+        plt.semilogx(w, phi)
         plt.grid()
         plt.tight_layout()
-        plt.draw()
+        self.canvas.draw()
+    
+    #extrae el número ingresado
+    def getnum(self):
+        print(float((self.lineEditL.text()).replace(',','.')))
 
 if __name__ == "__main__":
     import sys
