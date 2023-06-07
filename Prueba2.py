@@ -96,9 +96,9 @@ class Ui_Ploter(object):
         self.labelR.setText(_translate("Ploter", "Polos:"))
         
         self.pushButton.setText(_translate("Ploter", "Ok"))
-        self.floatvalidator()
-        self.lineEditL.returnPressed.connect(lambda: self.getnum())
-        self.lineEditR.returnPressed.connect(lambda: print(self.lineEditR.text()))
+        #self.floatvalidator()
+        self.lineEditL.returnPressed.connect(lambda: self.getnum(self.lineEditL))
+        self.lineEditR.returnPressed.connect(lambda: self.getnum(self.lineEditR))
         self.pushButton.clicked.connect(lambda: self.plot())
 
     #Lee la el index y cambia el valor del index
@@ -118,12 +118,13 @@ class Ui_Ploter(object):
     def updateSize(self):
         self.labelR.adjustSize()
         self.LabelL.adjustSize()
+        self.lineEditL.objectName
     
     # chequea que sea un float
-    def floatvalidator(self):
-        self.onlyfloat = QDoubleValidator(-1000000000,1000000000,1000000000)
-        self.lineEditL.setValidator(self.onlyfloat)
-        self.lineEditR.setValidator(self.onlyfloat)
+    #def floatvalidator(self):
+        #self.onlyfloat = QDoubleValidator(-1000000000,1000000000,1000000000)
+        #self.lineEditL.setValidator(self.onlyfloat)
+        #self.lineEditR.setValidator(self.onlyfloat)
     
     def plot(self):
         self.figure.clear()
@@ -141,8 +142,11 @@ class Ui_Ploter(object):
         self.canvas.draw()
     
     #extrae el número ingresado
-    def getnum(self):
-        print(float((self.lineEditL.text()).replace(',','.')))
+    def getnum(self, name):
+        try:
+            print(float((name.text()).replace(',','.')))
+        except:
+            print("dale wacho")
 
 if __name__ == "__main__":
     import sys
