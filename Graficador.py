@@ -9,6 +9,8 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 
 
 class Ui_Ploter(object):
@@ -207,6 +209,7 @@ class Ui_Ploter(object):
         self.psio.setText("")
         self.psio.setObjectName("psio")
         self.horizontalLayout_13.addWidget(self.psio)
+        self.psio.setReadOnly(True)
         self.label = QtWidgets.QLabel(self.tab_2)
         self.label.setGeometry(QtCore.QRect(11, 11, 141, 22))
         font = QtGui.QFont()
@@ -406,6 +409,38 @@ class Ui_Ploter(object):
         self.splitter_3.setOrientation(QtCore.Qt.Horizontal)
         self.splitter_3.setObjectName("splitter_3")
         Ploter.setCentralWidget(self.centralwidget)
+        #creo horizontalLayout
+        self.horizontalLayout_18 = QtWidgets.QHBoxLayout(self.bodemod)
+        self.horizontalLayout_18.setObjectName("horizontalLayout_18")
+        #creo canvas
+        self.bodemodplt = plt.figure()
+        self.canvas1 = FigureCanvas(self.bodemodplt)
+        #agrego canvas
+        self.horizontalLayout_18.addWidget(self.canvas1)
+        #creo horizontalLayout
+        self.horizontalLayout_19 = QtWidgets.QHBoxLayout(self.bodefase)
+        self.horizontalLayout_19.setObjectName("horizontalLayout_19")
+        #creo canvas
+        self.bodefaseplt = plt.figure()
+        self.canvas2 = FigureCanvas(self.bodefaseplt)
+        #agrego canvas
+        self.horizontalLayout_19.addWidget(self.canvas2)
+         #creo horizontalLayout
+        self.horizontalLayout_20 = QtWidgets.QHBoxLayout(self.entrada)
+        self.horizontalLayout_20.setObjectName("horizontalLayout_20")
+        #creo canvas
+        self.entradaplt = plt.figure()
+        self.canvas3 = FigureCanvas(self.entradaplt)
+        #agrego canvas
+        self.horizontalLayout_20.addWidget(self.canvas3)
+        #creo horizontalLayout
+        self.horizontalLayout_21 = QtWidgets.QHBoxLayout(self.cerospolos)
+        self.horizontalLayout_21.setObjectName("horizontalLayout_21")
+        #creo canvas
+        self.cerospolosplt = plt.figure()
+        self.canvas4 = FigureCanvas(self.cerospolosplt)
+        #agrego canvas
+        self.horizontalLayout_21.addWidget(self.canvas4)
 
         self.retranslateUi(Ploter)
         self.TabWidget.setCurrentIndex(1)
@@ -505,16 +540,39 @@ class Ui_Ploter(object):
     def getindex(self, combobox):
         return combobox.currentIndex()
     
+    #cambia el nombre
+    def changename(self, flag):
+        if flag:
+            self.psiolabel.setText("ξz:")
+            self.fo2label.setText("fz:")
+        else:
+            self.fo2label.setText("fo:")
+            self.psiolabel.setText("ξo:")
+    
     #deja escribir o no en base al index
     def lineeditcheck(self, combobox):
         if combobox.currentIndex() == 3 or combobox.currentIndex() == 5 or combobox.currentIndex() == 6 or combobox.currentIndex() == 7:
             self.fo1.setReadOnly(False)
             self.fo2.setReadOnly(False)
+            self.psio.setReadOnly(False)
+            self.fp2.clear()
+            self.fp2.setReadOnly(False)
+            self.changename(True)
+            if combobox.currentIndex() == 3:
+                self.fp2.clear()
+                self.fp2.setReadOnly(True)
+                self.changename(False)
+            elif combobox.currentIndex() == 7:
+                self.changename(False)
         else:
+            self.changename(False)
+            self.psio.setReadOnly(True)
+            self.psio.clear()
             self.fo1.setReadOnly(True)
             self.fo1.clear()
             self.fo2.setReadOnly(True)
             self.fo2.clear()
+            self.fp2.setReadOnly(False)
             
 
 if __name__ == "__main__":
