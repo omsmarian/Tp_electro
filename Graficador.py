@@ -579,31 +579,35 @@ class Ui_Ploter(object):
         #fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(8, 6))
 
         self.bodemodplt.clear()
-        self
+        self.bodefaseplt.clear()
+        self.cerospolosplt.clear()
+        self.entradaplt.clear()
 
         # Module
-        axes[0, 0].semilogx(filter.w, filter.Hdb)
-        axes[0, 0].grid(True)
+        plt.semilogx(filter.w, filter.Hdb)
+        plt.grid(True)
+        self.canvas1.draw()
         
         # Phase
-        axes[1, 0].semilogx(filter.w, filter.phi)
-        axes[1, 0].grid(True)
+        plt.semilogx(filter.w, filter.phi)
+        plt.grid(True)
+        self.canvas2.draw()
         
         # Poles & zeros
-        axes[0, 1].scatter(np.real(filter.zeros), np.imag(filter.zeros), marker = 'o', color = 'blue', label = 'Ceros')
-        axes[0, 1].scatter(np.real(filter.poles), np.imag(filter.poles), marker = 'x', color = 'red', label = 'Polos')
-        axes[0, 1].set_xlabel('σ')
-        axes[0, 1].set_ylabel('jω')
-        axes[0, 1].axhline(0, color='black', linewidth=1)
-        axes[0, 1].axvline(0, color='black', linewidth=1)
-        axes[0, 1].grid(True)
+        plt.scatter(np.real(filter.zeros), np.imag(filter.zeros), marker = 'o', color = 'blue', label = 'Ceros')
+        plt.scatter(np.real(filter.poles), np.imag(filter.poles), marker = 'x', color = 'red', label = 'Polos')
+        plt.set_xlabel('σ')
+        plt.set_ylabel('jω')
+        plt.axhline(0, color='black', linewidth=1)
+        plt.axvline(0, color='black', linewidth=1)
+        plt.grid(True)
+        self.canvas4.draw()
 
         # Out        
-        axes[1, 1].plot(filter.t, filter.Vin, label='Entrada', color='red')
-        axes[1, 1].plot(filter.t, filter.Vout, label='Salida', color='blue')
-        axes[1, 1].grid(True)
-
-        fig.tight_layout()
+        plt.plot(filter.t, filter.Vin, label='Entrada', color='red')
+        plt.plot(filter.t, filter.Vout, label='Salida', color='blue')
+        plt.grid(True)
+        self.canvas3.draw()
             
 
 if __name__ == "__main__":
