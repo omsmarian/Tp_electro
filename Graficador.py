@@ -518,6 +518,7 @@ class Ui_Ploter(object):
         self.fp1.editingFinished.connect(lambda: self.getnum(self.fp1))  
         self.ganancia1.editingFinished.connect(lambda: self.getnum(self.ganancia1))
         self.bandapa1.toggled.connect(lambda: print(self.getindex(self.filtro1)))
+        self.plot
         #segundo orden
         self.fo2.editingFinished.connect(lambda: self.getnum(self.fo2))
         self.fp2.editingFinished.connect(lambda: self.getnum(self.fp2))
@@ -573,6 +574,36 @@ class Ui_Ploter(object):
             self.fo2.setReadOnly(True)
             self.fo2.clear()
             self.fp2.setReadOnly(False)
+
+    def plot (self):
+        #fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(8, 6))
+
+        self.bodemodplt.clear()
+        self
+
+        # Module
+        axes[0, 0].semilogx(filter.w, filter.Hdb)
+        axes[0, 0].grid(True)
+        
+        # Phase
+        axes[1, 0].semilogx(filter.w, filter.phi)
+        axes[1, 0].grid(True)
+        
+        # Poles & zeros
+        axes[0, 1].scatter(np.real(filter.zeros), np.imag(filter.zeros), marker = 'o', color = 'blue', label = 'Ceros')
+        axes[0, 1].scatter(np.real(filter.poles), np.imag(filter.poles), marker = 'x', color = 'red', label = 'Polos')
+        axes[0, 1].set_xlabel('σ')
+        axes[0, 1].set_ylabel('jω')
+        axes[0, 1].axhline(0, color='black', linewidth=1)
+        axes[0, 1].axvline(0, color='black', linewidth=1)
+        axes[0, 1].grid(True)
+
+        # Out        
+        axes[1, 1].plot(filter.t, filter.Vin, label='Entrada', color='red')
+        axes[1, 1].plot(filter.t, filter.Vout, label='Salida', color='blue')
+        axes[1, 1].grid(True)
+
+        fig.tight_layout()
             
 
 if __name__ == "__main__":
