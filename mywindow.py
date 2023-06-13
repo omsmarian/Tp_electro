@@ -2,8 +2,8 @@ from PyQt5.QtWidgets import QMainWindow, QMessageBox
 from PyQt5 import QtCore, QtGui, QtWidgets
 from ui import Ui_Ploter
 import ploter
-import matplotlib.pyplot as plt
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+#import matplotlib.pyplot as plt
+#from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 
 import numpy as np
 from scipy import signal
@@ -178,18 +178,6 @@ class mywindow(QMainWindow, Ui_Ploter):
         self.horizontalLayout_21.setObjectName("horizontalLayout_21")
         
         #creo los plots y los canvas
-        #self.bodemodplt = plt.figure()
-        #self.axes_module = self.bodemodplt.add_subplot()
-        #self.bodefaseplt = plt.figure()
-        #self.axes_fase = self.bodefaseplt.add_subplot()
-        #self.entradaplt = plt.figure()
-        #self.axes_entrada = self.entradaplt.add_subplot()
-        #self.cerospolosplt = plt.figure()
-        #self.axes_cerospolos = self.cerospolosplt.add_subplot()
-        #self.canvas1 = FigureCanvas(self.bodemodplt)
-        #self.canvas2 = FigureCanvas(self.bodefaseplt)
-        #self.canvas3 = FigureCanvas(self.entradaplt)
-        #self.canvas4 = FigureCanvas(self.cerospolosplt)
         self.bodemodplt = ploter.PlotBodeMod()
         self.bodefaseplt = ploter.PlotBodeFase()
         self.entradaplt = ploter.PlotEntrada()
