@@ -2,8 +2,6 @@ from PyQt5.QtWidgets import QMainWindow, QMessageBox
 from PyQt5 import QtCore, QtGui, QtWidgets
 from ui import Ui_Ploter
 import ploter
-#import matplotlib.pyplot as plt
-#from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 
 import numpy as np
 from scipy import signal
@@ -188,3 +186,6 @@ class mywindow(QMainWindow, Ui_Ploter):
         self.horizontalLayout_19.addWidget(self.bodefaseplt)
         self.horizontalLayout_20.addWidget(self.entradaplt)
         self.horizontalLayout_21.addWidget(self.cerospolosplt)
+        
+#    def updateplots(self):
+        

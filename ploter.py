@@ -60,8 +60,10 @@ class PlotCerosPolos(PlotCanvas):
     def plot(self, x, y, color, label):
         self.axes.clear()
         self.axes.grid(True)
-        self.axes.plot(x, y, color, label)
+        self.axes.plot(x, y, color, label)      #Eze arreglalo
         
-        self.axes.set_xlabel('Frecuencia [Hz]')
-        self.axes.set_ylabel('Fase [°]')
+        self.axhline(0, color='black', linewidth=1)
+        self.axvline(0, color='black', linewidth=1)
+        self.axes.set_xlabel('σ')
+        self.axes.set_ylabel('jω')
         self.fig.canvas.draw()
