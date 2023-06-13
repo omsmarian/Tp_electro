@@ -19,6 +19,8 @@ import matplotlib.pyplot as plt
 
 class Ui_Ploter(object):
 
+    meme = filtro()
+
     def setupUi(self, Ploter):
         Ploter.setObjectName("Ploter")
         Ploter.resize(996, 854)
@@ -420,7 +422,7 @@ class Ui_Ploter(object):
         #creo canvas
         self.bodemodplt = plt.figure()
         self.canvas1 = FigureCanvas(self.bodemodplt)
-        self.axes_module = self.bodemodplt.subplots()
+        self.axes_module = self.bodemodplt.add_subplot()
         #agrego canvas
         self.horizontalLayout_18.addWidget(self.canvas1)
         #creo horizontalLayout
@@ -429,7 +431,7 @@ class Ui_Ploter(object):
         #creo canvas
         self.bodefaseplt = plt.figure()
         self.canvas2 = FigureCanvas(self.bodefaseplt)
-        self.axes_fase = self.bodefaseplt.subplots()
+        self.axes_fase = self.bodefaseplt.add_subplot()
         #agrego canvas
         self.horizontalLayout_19.addWidget(self.canvas2)
          #creo horizontalLayout
@@ -438,7 +440,7 @@ class Ui_Ploter(object):
         #creo canvas
         self.entradaplt = plt.figure()
         self.canvas3 = FigureCanvas(self.entradaplt)
-        self.axes_entrada = self.entradaplt.subplots()
+        self.axes_entrada = self.entradaplt.add_subplot()
         #agrego canvas
         self.horizontalLayout_20.addWidget(self.canvas3)
         #creo horizontalLayout
@@ -447,7 +449,7 @@ class Ui_Ploter(object):
         #creo canvas
         self.cerospolosplt = plt.figure()
         self.canvas4 = FigureCanvas(self.cerospolosplt)
-        self.axes_cerospolos = self.cerospolosplt.subplots()
+        self.axes_cerospolos = self.cerospolosplt.add_subplot()
         #agrego canvas
         self.horizontalLayout_21.addWidget(self.canvas4)
 
@@ -583,11 +585,13 @@ class Ui_Ploter(object):
             self.fo2.clear()
             self.fp2.setReadOnly(False)
 
+    def update(self, flag):
+        return
+
     def plot (self):
          
         fo = 100/(2*np.pi)
-        meme = filtro()
-        meme.set_SO('PASO', fo, 0.5)
+        self.meme.set_SO('PASO', fo, 0.5)
 
         self.axes_module.clear()
         self.axes_fase.clear()
@@ -595,29 +599,39 @@ class Ui_Ploter(object):
         self.axes_cerospolos.clear()
 
         # Module
-        self.axes_module.semilogx(meme.w, meme.Hdb)
+        self.axes_module.semilogx(self.meme.w, self.meme.Hdb)
+        self.axes_module.set_xlabel('σ')
+        self.axes_module.set_ylabel('jω')
         self.axes_module.grid()
         self.bodemodplt.set_tight_layout('True')
         self.canvas1.draw()
         
         # Phase
-        self.axes_fase.semilogx(meme.w, meme.phi)
+        self.axes_fase.semilogx(self.meme.w, self.meme.phi)
+        self.axes_fase.set_xlabel('σ')
+        self.axes_fase.set_ylabel('jω')
         self.axes_fase.grid(True)
+        self.bodefaseplt.set_tight_layout('True')
         self.canvas2.draw()
         
         # Poles & zeros
-        self.axes_cerospolos.scatter(np.real(meme.zeros), np.imag(meme.zeros), marker = 'o', color = 'blue', label = 'Ceros')
-        self.axes_cerospolos.scatter(np.real(meme.poles), np.imag(meme.poles), marker = 'x', color = 'red', label = 'Polos')
+        self.axes_cerospolos.scatter(np.real(self.meme.zeros), np.imag(self.meme.zeros), marker = 'o', color = 'blue', label = 'Ceros')
+        self.axes_cerospolos.scatter(np.real(self.meme.poles), np.imag(self.meme.poles), marker = 'x', color = 'red', label = 'Polos')
         self.axes_cerospolos.set_xlabel('σ')
         self.axes_cerospolos.set_ylabel('jω')
         self.axes_cerospolos.axhline(0, color='black', linewidth=1)
         self.axes_cerospolos.axvline(0, color='black', linewidth=1)
         self.axes_cerospolos.grid(True)
+        self.cerospolosplt.set_tight_layout('True')
         self.canvas4.draw()
-#        # Out        
+
+        # Out        
         self.axes_entrada.plot(meme.t, meme.Vin, label='Entrada', color='red')
         self.axes_entrada.plot(meme.t, meme.Vout, label='Salida', color='blue')
+        self.axes_entrada.set_xlabel('σ')
+        self.axes_entrada.set_ylabel('jω')
         self.axes_entrada.grid(True)
+        self.entradaplt.set_tight_layout('True')
         self.canvas3.draw()
             
 
