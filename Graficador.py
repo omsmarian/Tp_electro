@@ -11,9 +11,14 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from backend import filtro
 
+import numpy as np
+from scipy import signal
+import matplotlib.pyplot as plt
 
 class Ui_Ploter(object):
+
     def setupUi(self, Ploter):
         Ploter.setObjectName("Ploter")
         Ploter.resize(996, 854)
@@ -415,6 +420,7 @@ class Ui_Ploter(object):
         #creo canvas
         self.bodemodplt = plt.figure()
         self.canvas1 = FigureCanvas(self.bodemodplt)
+        self.axes_module = self.bodemodplt.subplots()
         #agrego canvas
         self.horizontalLayout_18.addWidget(self.canvas1)
         #creo horizontalLayout
@@ -423,6 +429,7 @@ class Ui_Ploter(object):
         #creo canvas
         self.bodefaseplt = plt.figure()
         self.canvas2 = FigureCanvas(self.bodefaseplt)
+        self.axes_fase = self.bodefaseplt.subplots()
         #agrego canvas
         self.horizontalLayout_19.addWidget(self.canvas2)
          #creo horizontalLayout
@@ -431,6 +438,7 @@ class Ui_Ploter(object):
         #creo canvas
         self.entradaplt = plt.figure()
         self.canvas3 = FigureCanvas(self.entradaplt)
+        self.axes_entrada = self.entradaplt.subplots()
         #agrego canvas
         self.horizontalLayout_20.addWidget(self.canvas3)
         #creo horizontalLayout
@@ -439,6 +447,7 @@ class Ui_Ploter(object):
         #creo canvas
         self.cerospolosplt = plt.figure()
         self.canvas4 = FigureCanvas(self.cerospolosplt)
+        self.axes_cerospolos = self.cerospolosplt.subplots()
         #agrego canvas
         self.horizontalLayout_21.addWidget(self.canvas4)
 
@@ -517,8 +526,7 @@ class Ui_Ploter(object):
         self.fo1.editingFinished.connect(lambda: self.getnum(self.fo1))  
         self.fp1.editingFinished.connect(lambda: self.getnum(self.fp1))  
         self.ganancia1.editingFinished.connect(lambda: self.getnum(self.ganancia1))
-        self.bandapa1.toggled.connect(lambda: print(self.getindex(self.filtro1)))
-        self.plot
+        self.bandapa1.toggled.connect(lambda: self.plot())
         #segundo orden
         self.fo2.editingFinished.connect(lambda: self.getnum(self.fo2))
         self.fp2.editingFinished.connect(lambda: self.getnum(self.fp2))
@@ -576,37 +584,40 @@ class Ui_Ploter(object):
             self.fp2.setReadOnly(False)
 
     def plot (self):
-        #fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(8, 6))
+         
+        fo = 100/(2*np.pi)
+        meme = filtro()
+        meme.set_SO('PASO', fo, 0.5)
 
-        self.bodemodplt.clear()
-        self.bodefaseplt.clear()
-        self.cerospolosplt.clear()
-        self.entradaplt.clear()
+        self.axes_module.clear()
+        self.axes_fase.clear()
+        self.axes_entrada.clear()
+        self.axes_cerospolos.clear()
 
         # Module
-        plt.semilogx(filter.w, filter.Hdb)
-        plt.grid(True)
+        self.axes_module.semilogx(meme.w, meme.Hdb)
+        self.axes_module.grid()
+        self.bodemodplt.set_tight_layout('True')
         self.canvas1.draw()
         
         # Phase
-        plt.semilogx(filter.w, filter.phi)
-        plt.grid(True)
+        self.axes_fase.semilogx(meme.w, meme.phi)
+        self.axes_fase.grid(True)
         self.canvas2.draw()
         
         # Poles & zeros
-        plt.scatter(np.real(filter.zeros), np.imag(filter.zeros), marker = 'o', color = 'blue', label = 'Ceros')
-        plt.scatter(np.real(filter.poles), np.imag(filter.poles), marker = 'x', color = 'red', label = 'Polos')
-        plt.set_xlabel('σ')
-        plt.set_ylabel('jω')
-        plt.axhline(0, color='black', linewidth=1)
-        plt.axvline(0, color='black', linewidth=1)
-        plt.grid(True)
+        self.axes_cerospolos.scatter(np.real(meme.zeros), np.imag(meme.zeros), marker = 'o', color = 'blue', label = 'Ceros')
+        self.axes_cerospolos.scatter(np.real(meme.poles), np.imag(meme.poles), marker = 'x', color = 'red', label = 'Polos')
+        self.axes_cerospolos.set_xlabel('σ')
+        self.axes_cerospolos.set_ylabel('jω')
+        self.axes_cerospolos.axhline(0, color='black', linewidth=1)
+        self.axes_cerospolos.axvline(0, color='black', linewidth=1)
+        self.axes_cerospolos.grid(True)
         self.canvas4.draw()
-
-        # Out        
-        plt.plot(filter.t, filter.Vin, label='Entrada', color='red')
-        plt.plot(filter.t, filter.Vout, label='Salida', color='blue')
-        plt.grid(True)
+#        # Out        
+        self.axes_entrada.plot(meme.t, meme.Vin, label='Entrada', color='red')
+        self.axes_entrada.plot(meme.t, meme.Vout, label='Salida', color='blue')
+        self.axes_entrada.grid(True)
         self.canvas3.draw()
             
 
