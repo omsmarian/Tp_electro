@@ -585,6 +585,9 @@ class Ui_Ploter(object):
             ganancia = self.getnum(self.ganancia2)          
             gananciatype = self.getganancia(orden)
             filtertype = self.getindex(self.filtro2)
+        print("tab 0: ",self.tab.isVisible())
+        print("tab 1: ",self.tab_2.isVisible())
+        print("tab 2: ",self.tab_3.isVisible())
         #else: #filtro de tercer orden
             #NO TOCAMOS ACÁ TODAVIA PQ ME VA A DAR ALGO
             #es un update no deberia returnear nada,

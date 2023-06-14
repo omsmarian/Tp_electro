@@ -7,12 +7,15 @@ class PlotCanvas(FigureCanvas):
         self.fig = plt.figure()
         self.fig.set_tight_layout(True)
         self.axes = self.fig.add_subplot()
+        self.axes.grid(True)
         super().__init__(self.fig)
 
 #calse para plotear modulo de bode
 class PlotBodeMod(PlotCanvas):
     def __init__(self):
         super().__init__()
+        self.axes.set_xlabel('Frecuencia [Hz]')
+        self.axes.set_ylabel('|H| [dB]')
     
     def plot(self, w, Hdb):
         self.axes.clear()
@@ -27,6 +30,8 @@ class PlotBodeMod(PlotCanvas):
 class PlotBodeFase(PlotCanvas):
     def __init__(self):
         super().__init__()
+        self.axes.set_xlabel('Frecuencia [Hz]')
+        self.axes.set_ylabel('Fase [°]')
         
     def plot(self, w, phi):
         self.axes.clear()
@@ -41,6 +46,8 @@ class PlotBodeFase(PlotCanvas):
 class PlotEntrada(PlotCanvas):
     def __init__(self):
         super().__init__()
+        self.axes.set_xlabel('Frecuencia [Hz]')
+        self.axes.set_ylabel('Voltaje [V]')
     
     def plot(self, x, y, color, label):
         self.axes.clear()
@@ -55,6 +62,8 @@ class PlotEntrada(PlotCanvas):
 class PlotCerosPolos(PlotCanvas):
     def __init__(self):
         super().__init__()
+        self.axes.set_xlabel('σ')
+        self.axes.set_ylabel('jω')
         
     def plot(self, realCeros, imagCeros, realPolos, imagPolos):
         self.axes.clear()

@@ -119,6 +119,7 @@ class Ui_Ploter(object):
         self.fo1 = QtWidgets.QLineEdit(self.layoutWidget2)
         self.fo1.setText("")
         self.fo1.setObjectName("fo1")
+        self.fo1.setReadOnly(True)
         self.horizontalLayout.addWidget(self.fo1)
         self.unitfo1 = QtWidgets.QComboBox(self.splitter_4)
         self.unitfo1.setObjectName("unitfo1")
@@ -205,6 +206,7 @@ class Ui_Ploter(object):
         self.psio = QtWidgets.QLineEdit(self.layoutWidget_9)
         self.psio.setText("")
         self.psio.setObjectName("psio")
+        self.psio.setReadOnly(True)
         self.horizontalLayout_13.addWidget(self.psio)
         self.label = QtWidgets.QLabel(self.tab_2)
         self.label.setGeometry(QtCore.QRect(11, 11, 141, 22))
@@ -231,6 +233,7 @@ class Ui_Ploter(object):
         self.fo2 = QtWidgets.QLineEdit(self.layoutWidget_13)
         self.fo2.setText("")
         self.fo2.setObjectName("fo2")
+        self.fo2.setReadOnly(True)
         self.horizontalLayout_2.addWidget(self.fo2)
         self.unitfo2 = QtWidgets.QComboBox(self.splitter_6)
         self.unitfo2.setObjectName("unitfo2")
@@ -484,7 +487,7 @@ class Ui_Ploter(object):
         self.unitampent.setItemText(0, _translate("Ploter", "V"))
         self.unitampent.setItemText(1, _translate("Ploter", "KV"))
         self.unitampent.setItemText(2, _translate("Ploter", "MV"))
-
+        self.TabWidget.isTabVisible
 
 if __name__ == "__main__":
     import sys

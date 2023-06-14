@@ -2,18 +2,15 @@ from PyQt5.QtWidgets import QMainWindow, QMessageBox
 from PyQt5 import QtCore, QtGui, QtWidgets
 from ui import Ui_Ploter
 import ploter
-import Filtro
-
-import numpy as np
-from scipy import signal
-import matplotlib.pyplot as plt
+from Filtro import filtro
+from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigatorTool
 
 class mywindow(QMainWindow, Ui_Ploter):
 
     def __init__(self):
         super(mywindow, self).__init__()
         self.setupUi(self)
-        self.datos = Filtro.filtro()
+        self.datos = filtro()
         self.initplots()
         self.update()
     
@@ -41,7 +38,6 @@ class mywindow(QMainWindow, Ui_Ploter):
     def lineeditcheck(self, combobox):
         ifcondition = (combobox.currentIndex() == 3 or combobox.currentIndex() == 5 or 
             combobox.currentIndex() == 6 or combobox.currentIndex() == 7)
-        self.clearall()
         if ifcondition:
             self.fo1.setReadOnly(False)
             self.fo2.setReadOnly(False)
@@ -49,18 +45,29 @@ class mywindow(QMainWindow, Ui_Ploter):
             self.fp2.setReadOnly(False)
             self.changename(True)
             if combobox.currentIndex() == 3:
+                self.fo2.clear()
+                self.psip.clear()
                 self.fp2.setReadOnly(True)
                 self.psip.setReadOnly(True)
                 self.changename(False)
             elif combobox.currentIndex() == 7:
                 self.changename(False)
+            elif combobox.currentIndex() == 5 or combobox.currentIndex() == 6:
+                self.clearall()
         else:
             self.changename(False)
+            self.fo1.clear()
+            self.fo2.clear()
+            self.psio.clear()
             self.psio.setReadOnly(True)
             self.fo1.setReadOnly(True)
             self.fo2.setReadOnly(True)
             self.fp2.setReadOnly(False)
             self.psip.setReadOnly(False)
+        if combobox == self.filtro1:
+            self.updateparams(1)
+        else:
+            self.updateparams(2)
 
     #recibe flag y guarda todos los datos
     def updateparams(self, orden):
@@ -175,13 +182,13 @@ class mywindow(QMainWindow, Ui_Ploter):
         
     def initplots(self):
         #creo horizontal layouts
-        self.horizontalLayout_18 = QtWidgets.QHBoxLayout(self.bodemod)
+        self.horizontalLayout_18 = QtWidgets.QVBoxLayout(self.bodemod)
         self.horizontalLayout_18.setObjectName("horizontalLayout_18")
-        self.horizontalLayout_19 = QtWidgets.QHBoxLayout(self.bodefase)
+        self.horizontalLayout_19 = QtWidgets.QVBoxLayout(self.bodefase)
         self.horizontalLayout_19.setObjectName("horizontalLayout_19")
-        self.horizontalLayout_20 = QtWidgets.QHBoxLayout(self.entrada)
+        self.horizontalLayout_20 = QtWidgets.QVBoxLayout(self.entrada)
         self.horizontalLayout_20.setObjectName("horizontalLayout_20")
-        self.horizontalLayout_21 = QtWidgets.QHBoxLayout(self.cerospolos)
+        self.horizontalLayout_21 = QtWidgets.QVBoxLayout(self.cerospolos)
         self.horizontalLayout_21.setObjectName("horizontalLayout_21")
         
         #creo los plots y los canvas
@@ -189,6 +196,12 @@ class mywindow(QMainWindow, Ui_Ploter):
         self.bodefaseplt = ploter.PlotBodeFase()
         self.entradaplt = ploter.PlotEntrada()
         self.cerospolosplt = ploter.PlotCerosPolos()
+        
+        #agrego toolbars
+        self.horizontalLayout_18.addWidget(NavigatorTool(self.bodemodplt, self))
+        self.horizontalLayout_19.addWidget(NavigatorTool(self.bodefaseplt, self))
+        self.horizontalLayout_20.addWidget(NavigatorTool(self.entradaplt, self))
+        self.horizontalLayout_21.addWidget(NavigatorTool(self.cerospolosplt, self))
         
         #agrego canvas a horizontal layouts
         self.horizontalLayout_18.addWidget(self.bodemodplt)
