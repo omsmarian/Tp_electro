@@ -14,11 +14,10 @@ class PlotBodeMod(PlotCanvas):
     def __init__(self):
         super().__init__()
     
-    
-    def plot(self, x, y, color, label):
+    def plot(self, w, Hdb):
         self.axes.clear()
         self.axes.grid(True)
-        self.axes.semilogx(x, y, color, label)
+        self.axes.semilogx(w, Hdb)
         
         self.axes.set_xlabel('Frecuencia [Hz]')
         self.axes.set_ylabel('|H| [dB]')
@@ -29,10 +28,10 @@ class PlotBodeFase(PlotCanvas):
     def __init__(self):
         super().__init__()
         
-    def plot(self, x, y, color, label):
+    def plot(self, w, phi):
         self.axes.clear()
         self.axes.grid(True)
-        self.axes.semilogx(x, y, color, label)
+        self.axes.semilogx(w, phi)
         
         self.axes.set_xlabel('Frecuencia [Hz]')
         self.axes.set_ylabel('Fase [°]')
@@ -57,13 +56,14 @@ class PlotCerosPolos(PlotCanvas):
     def __init__(self):
         super().__init__()
         
-    def plot(self, x, y, color, label):
+    def plot(self, realCeros, imagCeros, realPolos, imagPolos):
         self.axes.clear()
         self.axes.grid(True)
-        self.axes.plot(x, y, color, label)      #Eze arreglalo
+        self.axes.scatter(realCeros, imagCeros, marker = 'o', color = 'blue', label = 'Ceros')
+        self.axes.scatter(realPolos, imagPolos, marker = 'x', color = 'red', label = 'Polos')
         
-        self.axhline(0, color='black', linewidth=1)
-        self.axvline(0, color='black', linewidth=1)
+        self.axes.axhline(0, color='black', linewidth=1)
+        self.axes.axvline(0, color='black', linewidth=1)
         self.axes.set_xlabel('σ')
         self.axes.set_ylabel('jω')
         self.fig.canvas.draw()

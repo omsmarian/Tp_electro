@@ -2,15 +2,18 @@ from PyQt5.QtWidgets import QMainWindow, QMessageBox
 from PyQt5 import QtCore, QtGui, QtWidgets
 from ui import Ui_Ploter
 import ploter
+import Filtro
 
 import numpy as np
 from scipy import signal
 import matplotlib.pyplot as plt
 
 class mywindow(QMainWindow, Ui_Ploter):
+
     def __init__(self):
         super(mywindow, self).__init__()
         self.setupUi(self)
+        self.datos = Filtro.filtro()
         self.initplots()
         self.update()
     
@@ -63,21 +66,27 @@ class mywindow(QMainWindow, Ui_Ploter):
     def updateparams(self, orden):
         #flags 1, primer orden, 2 segundo, 3 superior
         if orden == 1:
-            fo = self.getnum(self.fo1) * self.get_multiplier(self.unitfo1)
-            fp = self.getnum(self.fp1) * self.get_multiplier(self.unitfp1)      #Eze hace lo q quieras acá lo puse asi para tenerlo
+            self.datos.fo = self.getnum(self.fo1) * self.get_multiplier(self.unitfo1)
+            self.datos.fp = self.getnum(self.fp1) * self.get_multiplier(self.unitfp1)      #Eze hace lo q quieras acá lo puse asi para tenerlo
             ganancia = self.getnum(self.ganancia1)          
             gananciatype = self.getganancia(orden)
-            filtertype = self.getindex(self.filtro1)
+            self.datos.filterType = self.getindex(self.filtro1)
+            self.datos.filterOrder = 1
         elif orden == 2:
-            fo = self.getnum(self.fo2) * self.get_multiplier(self.unitfo2)
-            fp = self.getnum(self.fp2) * self.get_multiplier(self.unitfp2)      #Eze acá tmb
+            self.datos.fo = self.getnum(self.fo2) * self.get_multiplier(self.unitfo2)
+            self.datos.fp = self.getnum(self.fp2) * self.get_multiplier(self.unitfp2)      #Eze acá tmb
+            self.datos.xio = self.getnum(self.psio)
+            self.datos.xip = self.getnum(self.psip)
             ganancia = self.getnum(self.ganancia2)          
             gananciatype = self.getganancia(orden)
-            filtertype = self.getindex(self.filtro2)
+            self.datos.filterType = self.getindex(self.filtro2)
+            self.datos.filterOrder = 2
         #else: #filtro de tercer orden
             #NO TOCAMOS ACÁ TODAVIA PQ ME VA A DAR ALGO
             #es un update no deberia returnear nada,
             # calculo q solo sube los datos a la clase filter
+        self.datos.update()
+        self.updateplots()
     
     #returns multiplier
     def get_multiplier(self, combobox):
@@ -187,5 +196,10 @@ class mywindow(QMainWindow, Ui_Ploter):
         self.horizontalLayout_20.addWidget(self.entradaplt)
         self.horizontalLayout_21.addWidget(self.cerospolosplt)
         
-#    def updateplots(self):
+    def updateplots(self):
+        self.bodemodplt.plot(self.datos.w, self.datos.Hdb)
+        self.bodefaseplt.plot(self.datos.w, self.datos.phi)
+        self.cerospolosplt.plot(self.datos.realZeros, self.datos.imagZeros,
+                                self.datos.realPoles, self.datos.imagPoles)
+        
         
