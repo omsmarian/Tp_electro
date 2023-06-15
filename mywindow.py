@@ -38,17 +38,10 @@ class mywindow(QMainWindow, Ui_Ploter):
     #deja escribir o no en base al index
     def lineeditcheck(self, combobox):
         if combobox.currentIndex() == 3:
-            self.fo1.setReadOnly(False)
             self.fp2.clear()
             self.psip.clear()
             self.fp2.setReadOnly(True)
             self.psip.setReadOnly(True)
-            self.fo2.setReadOnly(False)
-            self.psio.setReadOnly(False)
-            self.changename(False)
-        elif combobox.currentIndex() == 7:
-            self.fp2.setReadOnly(False)
-            self.psip.setReadOnly(False)
             self.fo2.setReadOnly(False)
             self.psio.setReadOnly(False)
             self.changename(False)
@@ -61,11 +54,9 @@ class mywindow(QMainWindow, Ui_Ploter):
             self.changename(True)
         else:
             self.changename(False)
-            self.fo1.clear()
             self.fo2.clear()
             self.psio.clear()
             self.psio.setReadOnly(True)
-            self.fo1.setReadOnly(True)
             self.fo2.setReadOnly(True)
             self.fp2.setReadOnly(False)
             self.psip.setReadOnly(False)
@@ -75,7 +66,6 @@ class mywindow(QMainWindow, Ui_Ploter):
     def updateparams(self, orden):
         #flags 0, primer orden, 1 segundo, 2 superior
         if orden == 0:
-            self.datos.fo = self.getnum(self.fo1) * self.get_multiplier(self.unitfo1)
             self.datos.fp = self.getnum(self.fp1) * self.get_multiplier(self.unitfp1)    
             self.datos.gain = self.getnum(self.ganancia1)          
             self.datos.gainType = self.getganancia(orden)
@@ -132,13 +122,11 @@ class mywindow(QMainWindow, Ui_Ploter):
     def checkforparamupdates(self):
         self.TabWidget.currentChanged.connect(lambda: self.TabUpdate(self.getTabindex()))
         #primer orden
-        self.filtro1.activated.connect(lambda: self.lineeditcheck(self.filtro1))
-        self.fo1.editingFinished.connect(lambda: self.updateparams(self.getTabindex()))
+        self.filtro1.activated.connect(lambda: self.updateparams(self.getTabindex()))
         self.fp1.editingFinished.connect(lambda: self.updateparams(self.getTabindex()))
         self.ganancia1.editingFinished.connect(lambda: self.updateparams(self.getTabindex()))
         self.bandapa1.toggled.connect(lambda: self.updateparams(self.getTabindex()))
         self.max1.toggled.connect(lambda: self.updateparams(self.getTabindex()))
-        self.unitfo1.activated.connect(lambda: self.updateparams(self.getTabindex()))
         self.unitfp1.activated.connect(lambda: self.updateparams(self.getTabindex()))
         #segundo orden
         self.filtro2.activated.connect(lambda: self.lineeditcheck(self.filtro2))
@@ -165,7 +153,6 @@ class mywindow(QMainWindow, Ui_Ploter):
         
     #limpia todas las cajas de texto de segundo orden
     def clearall1(self):
-        self.fo1.clear()
         self.fp1.clear()
         self.ganancia1.clear()
     
@@ -230,14 +217,19 @@ class mywindow(QMainWindow, Ui_Ploter):
     #chequea los LineEdits para cambiar de tab 
     def TabUpdate(self, index):
         if index == 0:
-            self.lineeditcheck(self.filtro1)
             self.clearall2()
+            self.numerador.clear()
+            self.denominador.clear()
         elif index == 1:
             self.lineeditcheck(self.filtro2)
             self.clearall1()
+            self.numerador.clear()
+            self.denominador.clear()
+        else:
+            self.clearall1()
+            self.clearall2()
         self.datos.setUp()
         self.clearplots()
-
 
     def clearplots(self):
         self.bodemodplt.setUp()

@@ -6,657 +6,50 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1122</width>
+    <width>1131</width>
     <height>938</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Plot Tool</string>
   </property>
+  <property name="iconSize">
+   <size>
+    <width>60</width>
+    <height>50</height>
+   </size>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
-     <widget class="QTabWidget" name="TabWidget">
+    <item row="2" column="0">
+     <widget class="QFrame" name="cerospolos">
       <property name="minimumSize">
        <size>
         <width>400</width>
-        <height>210</height>
+        <height>511</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>400</width>
-        <height>210</height>
+        <width>410</width>
+        <height>16777215</height>
        </size>
       </property>
-      <property name="currentIndex">
-       <number>1</number>
+      <property name="cursor">
+       <cursorShape>CrossCursor</cursorShape>
       </property>
-      <widget class="QWidget" name="tab">
-       <attribute name="title">
-        <string>Primer Orden</string>
-       </attribute>
-       <widget class="QComboBox" name="filtro1">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>50</y>
-          <width>92</width>
-          <height>22</height>
-         </rect>
-        </property>
-        <property name="focusPolicy">
-         <enum>Qt::ClickFocus</enum>
-        </property>
-        <property name="editable">
-         <bool>false</bool>
-        </property>
-        <property name="sizeAdjustPolicy">
-         <enum>QComboBox::AdjustToContents</enum>
-        </property>
-        <item>
-         <property name="text">
-          <string>Pasa altos</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Pasa bajos</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Pasa todo</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Arbritario</string>
-         </property>
-        </item>
-       </widget>
-       <widget class="QLabel" name="label_5">
-        <property name="geometry">
-         <rect>
-          <x>11</x>
-          <y>11</y>
-          <width>141</width>
-          <height>22</height>
-         </rect>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>14</pointsize>
-         </font>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::NoFrame</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Plain</enum>
-        </property>
-        <property name="text">
-         <string>Tipo de Filtro:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-       <widget class="QWidget" name="layoutWidget">
-        <property name="geometry">
-         <rect>
-          <x>195</x>
-          <y>78</y>
-          <width>179</width>
-          <height>92</height>
-         </rect>
-        </property>
-        <layout class="QVBoxLayout" name="verticalLayout">
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_3">
-           <item>
-            <widget class="QLabel" name="ganancia1label">
-             <property name="font">
-              <font>
-               <pointsize>10</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Ganancia:</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLineEdit" name="ganancia1"/>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <widget class="QRadioButton" name="bandapa1">
-           <property name="font">
-            <font>
-             <pointsize>10</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>Banda Pasante</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QRadioButton" name="max1">
-           <property name="font">
-            <font>
-             <pointsize>10</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>Máxima</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-       <widget class="QSplitter" name="splitter_5">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>140</y>
-          <width>177</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="handleWidth">
-         <number>8</number>
-        </property>
-        <widget class="QWidget" name="layoutWidget">
-         <layout class="QHBoxLayout" name="horizontalLayout_17">
-          <item>
-           <widget class="QLabel" name="fp1label">
-            <property name="font">
-             <font>
-              <pointsize>10</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>fp:</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="fp1">
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-        <widget class="QComboBox" name="unitfp1">
-         <item>
-          <property name="text">
-           <string>Hz</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>KHz</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>MHz</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>GHz</string>
-          </property>
-         </item>
-        </widget>
-       </widget>
-       <widget class="QSplitter" name="splitter_4">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>100</y>
-          <width>177</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="handleWidth">
-         <number>8</number>
-        </property>
-        <widget class="QWidget" name="layoutWidget">
-         <layout class="QHBoxLayout" name="horizontalLayout">
-          <item>
-           <widget class="QLabel" name="fo1label">
-            <property name="font">
-             <font>
-              <pointsize>10</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>fo:</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="fo1">
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-        <widget class="QComboBox" name="unitfo1">
-         <item>
-          <property name="text">
-           <string>Hz</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>KHz</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>MHz</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>GHz</string>
-          </property>
-         </item>
-        </widget>
-       </widget>
-      </widget>
-      <widget class="QWidget" name="tab_2">
-       <attribute name="title">
-        <string>Segundo Orden</string>
-       </attribute>
-       <widget class="QWidget" name="layoutWidget_8">
-        <property name="geometry">
-         <rect>
-          <x>195</x>
-          <y>78</y>
-          <width>179</width>
-          <height>92</height>
-         </rect>
-        </property>
-        <layout class="QVBoxLayout" name="verticalLayout_3">
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_12">
-           <item>
-            <widget class="QLabel" name="ganancia2label">
-             <property name="font">
-              <font>
-               <pointsize>10</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Ganancia:</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLineEdit" name="ganancia2"/>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <widget class="QRadioButton" name="bandapa2">
-           <property name="font">
-            <font>
-             <pointsize>10</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>Banda Pasante</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QRadioButton" name="max2">
-           <property name="font">
-            <font>
-             <pointsize>10</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>Máxima</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-       <widget class="QComboBox" name="filtro2">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>50</y>
-          <width>121</width>
-          <height>22</height>
-         </rect>
-        </property>
-        <property name="editable">
-         <bool>false</bool>
-        </property>
-        <property name="sizeAdjustPolicy">
-         <enum>QComboBox::AdjustToContents</enum>
-        </property>
-        <item>
-         <property name="text">
-          <string>Pasa altos</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Pasa bajos</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Pasa todo</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Pasa Banda</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Notch</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Low-pass notch</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>High-pass notch</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Arbitrarios</string>
-         </property>
-        </item>
-       </widget>
-       <widget class="QWidget" name="layoutWidget_10">
-        <property name="geometry">
-         <rect>
-          <x>195</x>
-          <y>45</y>
-          <width>141</width>
-          <height>26</height>
-         </rect>
-        </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_14" stretch="0,0">
-         <property name="spacing">
-          <number>15</number>
-         </property>
-         <item>
-          <widget class="QLabel" name="psiplabel">
-           <property name="font">
-            <font>
-             <pointsize>10</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string> ξp:</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="psip">
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-       <widget class="QWidget" name="layoutWidget_9">
-        <property name="geometry">
-         <rect>
-          <x>195</x>
-          <y>11</y>
-          <width>141</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_13">
-         <property name="spacing">
-          <number>15</number>
-         </property>
-         <item>
-          <widget class="QLabel" name="psiolabel">
-           <property name="font">
-            <font>
-             <pointsize>10</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string> ξo:</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="psio">
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-       <widget class="QLabel" name="label">
-        <property name="geometry">
-         <rect>
-          <x>11</x>
-          <y>11</y>
-          <width>141</width>
-          <height>22</height>
-         </rect>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>14</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>Tipo de Filtro:</string>
-        </property>
-       </widget>
-       <widget class="QSplitter" name="splitter_6">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>100</y>
-          <width>177</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="handleWidth">
-         <number>8</number>
-        </property>
-        <widget class="QWidget" name="layoutWidget_13">
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
-          <item>
-           <widget class="QLabel" name="fo2label">
-            <property name="font">
-             <font>
-              <pointsize>10</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>fo:</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="fo2">
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-        <widget class="QComboBox" name="unitfo2">
-         <item>
-          <property name="text">
-           <string>Hz</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>KHz</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>MHz</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>GHz</string>
-          </property>
-         </item>
-        </widget>
-       </widget>
-       <widget class="QSplitter" name="splitter_7">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>140</y>
-          <width>177</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="handleWidth">
-         <number>8</number>
-        </property>
-        <widget class="QWidget" name="layoutWidget_6">
-         <layout class="QHBoxLayout" name="horizontalLayout_10">
-          <item>
-           <widget class="QLabel" name="fp2label">
-            <property name="font">
-             <font>
-              <pointsize>10</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>fp:</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="fp2">
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-        <widget class="QComboBox" name="unitfp2">
-         <item>
-          <property name="text">
-           <string>Hz</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>KHz</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>MHz</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>GHz</string>
-          </property>
-         </item>
-        </widget>
-       </widget>
-      </widget>
-      <widget class="QWidget" name="tab_3">
-       <attribute name="title">
-        <string>Orden Superior</string>
-       </attribute>
-       <layout class="QGridLayout" name="gridLayout_3">
-        <item row="0" column="0">
-         <layout class="QHBoxLayout" name="horizontalLayout_15">
-          <item>
-           <widget class="QLabel" name="numlabel">
-            <property name="font">
-             <font>
-              <pointsize>10</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>Numerador:</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="numerador">
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item row="1" column="0">
-         <layout class="QHBoxLayout" name="horizontalLayout_16">
-          <item>
-           <widget class="QLabel" name="denlabel">
-            <property name="font">
-             <font>
-              <pointsize>10</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>Denominador:</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="denominador">
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-       </layout>
-      </widget>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::Panel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Sunken</enum>
+      </property>
+      <property name="lineWidth">
+       <number>3</number>
+      </property>
      </widget>
     </item>
     <item row="0" column="1" rowspan="3">
@@ -665,8 +58,8 @@
        <widget class="QFrame" name="bodemod">
         <property name="minimumSize">
          <size>
-          <width>591</width>
-          <height>291</height>
+          <width>695</width>
+          <height>300</height>
          </size>
         </property>
         <property name="cursor">
@@ -687,8 +80,8 @@
        <widget class="QFrame" name="bodefase">
         <property name="minimumSize">
          <size>
-          <width>700</width>
-          <height>291</height>
+          <width>695</width>
+          <height>300</height>
          </size>
         </property>
         <property name="cursor">
@@ -709,8 +102,8 @@
        <widget class="QFrame" name="entrada">
         <property name="minimumSize">
          <size>
-          <width>591</width>
-          <height>291</height>
+          <width>695</width>
+          <height>300</height>
          </size>
         </property>
         <property name="cursor">
@@ -931,35 +324,583 @@
       </widget>
      </widget>
     </item>
-    <item row="2" column="0">
-     <widget class="QFrame" name="cerospolos">
+    <item row="0" column="0">
+     <widget class="QTabWidget" name="TabWidget">
       <property name="minimumSize">
        <size>
         <width>400</width>
-        <height>511</height>
+        <height>210</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>400</width>
-        <height>16777215</height>
+        <width>410</width>
+        <height>210</height>
        </size>
       </property>
-      <property name="cursor">
-       <cursorShape>CrossCursor</cursorShape>
+      <property name="currentIndex">
+       <number>0</number>
       </property>
-      <property name="focusPolicy">
-       <enum>Qt::NoFocus</enum>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::Panel</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Sunken</enum>
-      </property>
-      <property name="lineWidth">
-       <number>3</number>
-      </property>
+      <widget class="QWidget" name="tab">
+       <attribute name="title">
+        <string>Primer Orden</string>
+       </attribute>
+       <widget class="QComboBox" name="filtro1">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>50</y>
+          <width>92</width>
+          <height>22</height>
+         </rect>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::ClickFocus</enum>
+        </property>
+        <property name="editable">
+         <bool>false</bool>
+        </property>
+        <property name="sizeAdjustPolicy">
+         <enum>QComboBox::AdjustToContents</enum>
+        </property>
+        <item>
+         <property name="text">
+          <string>Pasa altos</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Pasa bajos</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Pasa todo</string>
+         </property>
+        </item>
+       </widget>
+       <widget class="QLabel" name="label_5">
+        <property name="geometry">
+         <rect>
+          <x>11</x>
+          <y>11</y>
+          <width>141</width>
+          <height>22</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Plain</enum>
+        </property>
+        <property name="text">
+         <string>Tipo de Filtro:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+       <widget class="QWidget" name="layoutWidget">
+        <property name="geometry">
+         <rect>
+          <x>195</x>
+          <y>78</y>
+          <width>179</width>
+          <height>92</height>
+         </rect>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <item>
+            <widget class="QLabel" name="ganancia1label">
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Ganancia:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="ganancia1"/>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="bandapa1">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Banda Pasante</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="max1">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Máxima</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QSplitter" name="splitter_5">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>100</y>
+          <width>177</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="handleWidth">
+         <number>8</number>
+        </property>
+        <widget class="QWidget" name="layoutWidget">
+         <layout class="QHBoxLayout" name="horizontalLayout_17">
+          <item>
+           <widget class="QLabel" name="fp1label">
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>fp:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="fp1">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QComboBox" name="unitfp1">
+         <item>
+          <property name="text">
+           <string>Hz</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>KHz</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>MHz</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>GHz</string>
+          </property>
+         </item>
+        </widget>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tab_2">
+       <attribute name="title">
+        <string>Segundo Orden</string>
+       </attribute>
+       <widget class="QWidget" name="layoutWidget_8">
+        <property name="geometry">
+         <rect>
+          <x>195</x>
+          <y>78</y>
+          <width>179</width>
+          <height>92</height>
+         </rect>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_12">
+           <item>
+            <widget class="QLabel" name="ganancia2label">
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Ganancia:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="ganancia2"/>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="bandapa2">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Banda Pasante</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="max2">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Máxima</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QComboBox" name="filtro2">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>50</y>
+          <width>121</width>
+          <height>22</height>
+         </rect>
+        </property>
+        <property name="editable">
+         <bool>false</bool>
+        </property>
+        <property name="sizeAdjustPolicy">
+         <enum>QComboBox::AdjustToContents</enum>
+        </property>
+        <item>
+         <property name="text">
+          <string>Pasa altos</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Pasa bajos</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Pasa todo</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Pasa Banda</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Notch</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Low-pass notch</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>High-pass notch</string>
+         </property>
+        </item>
+       </widget>
+       <widget class="QWidget" name="layoutWidget_10">
+        <property name="geometry">
+         <rect>
+          <x>195</x>
+          <y>45</y>
+          <width>141</width>
+          <height>26</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_14" stretch="0,0">
+         <property name="spacing">
+          <number>15</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="psiplabel">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string> ξp:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="psip">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="layoutWidget_9">
+        <property name="geometry">
+         <rect>
+          <x>195</x>
+          <y>11</y>
+          <width>141</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_13">
+         <property name="spacing">
+          <number>15</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="psiolabel">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string> ξo:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="psio">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QLabel" name="label">
+        <property name="geometry">
+         <rect>
+          <x>11</x>
+          <y>11</y>
+          <width>141</width>
+          <height>22</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Tipo de Filtro:</string>
+        </property>
+       </widget>
+       <widget class="QSplitter" name="splitter_6">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>100</y>
+          <width>177</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="handleWidth">
+         <number>8</number>
+        </property>
+        <widget class="QWidget" name="layoutWidget_13">
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <widget class="QLabel" name="fo2label">
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>fo:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="fo2">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QComboBox" name="unitfo2">
+         <item>
+          <property name="text">
+           <string>Hz</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>KHz</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>MHz</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>GHz</string>
+          </property>
+         </item>
+        </widget>
+       </widget>
+       <widget class="QSplitter" name="splitter_7">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>140</y>
+          <width>177</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="handleWidth">
+         <number>8</number>
+        </property>
+        <widget class="QWidget" name="layoutWidget_6">
+         <layout class="QHBoxLayout" name="horizontalLayout_10">
+          <item>
+           <widget class="QLabel" name="fp2label">
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>fp:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="fp2">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QComboBox" name="unitfp2">
+         <item>
+          <property name="text">
+           <string>Hz</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>KHz</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>MHz</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>GHz</string>
+          </property>
+         </item>
+        </widget>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tab_3">
+       <attribute name="title">
+        <string>Arbitrario/Orden Superior</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_3">
+        <item row="0" column="0">
+         <layout class="QHBoxLayout" name="horizontalLayout_15">
+          <item>
+           <widget class="QLabel" name="numlabel">
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Numerador:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="numerador">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="1" column="0">
+         <layout class="QHBoxLayout" name="horizontalLayout_16">
+          <item>
+           <widget class="QLabel" name="denlabel">
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Denominador:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="denominador">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>
