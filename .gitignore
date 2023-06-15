@@ -33,3 +33,4 @@ desktop.ini
 secrets.txt
 
 # Add any other file or directory patterns you want to ignore
+__pycache__

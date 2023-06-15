@@ -10,6 +10,7 @@ class mywindow(QMainWindow, Ui_Ploter):
     def __init__(self):
         super(mywindow, self).__init__()
         self.setupUi(self)
+        self.setWindowIcon(QtGui.QIcon('descarga.jpg'))
         self.datos = filtro()
         self.initplots()
         self.update()
