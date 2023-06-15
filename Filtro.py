@@ -5,37 +5,7 @@ import re
 class filtro:
 
     def __init__(self):
-        self.filterOrder = 1
-        self.filterType = 0
-        self.gain = 1
-        self.gainType = 2
-        self.fo = 1
-        self.fp = 1
-        self.xio = 0
-        self.xip = 0
-
-        self.numSuperior = ''
-        self.denSuperior = ''
-
-        # Bode 
-        self.Hs = ((0,0,1),(0,0,1))    # (num,den)
-        self.sys = signal.TransferFunction(self.Hs[0], self.Hs[1])
-        self.w, self.Hdb, self.phi = (0,0,0)
-
-        # Input Signal
-        self.t = np.linspace(0, 10, 1000)
-        self.Vin = np.sin(2* np.pi * self.t)
-        self.Vout = 0
-        _, self.Vout, _ = signal.lsim(self.sys, U=self.Vin, T=self.t)
-
-        # Zeros & Poles
-        self.zeros = []
-        self.poles = []
-        self.realZeros = np.real(self.zeros)
-        self.imagZeros = np.imag(self.zeros)
-        self.realPoles = np.real(self.poles)
-        self.imagPoles = np.imag(self.poles)
-
+        self.setUp()
     def num(self, newNum):
         self.Hs = (newNum, self.Hs[1])
         return
@@ -92,28 +62,28 @@ class filtro:
         xiz = self.xio
         f = self.fp
         fz = self.fo
-        if f!=0:
-            if self.filterType == 0: # Second order - High Pass
-                self.num((1, 0, 0))
-                self.den((1/f**2, 2*xi/f, 1))
-            elif self.filterType == 1: # Second order - Low Pass
-                self.num((0, 0, 1))
-                self.den((1/f**2, 2*xi/f, 1))
-            elif self.filterType == 2: # Second order - All Pass
-                self.num((1/f**2, -2*xi/f, 1))
-                self.den((1/f**2, 2*xi/f, 1))
-            elif self.filterType == 3: # Second order - Band Pass
-                self.num((0, 1, 0))
-                self.den((1/f**2, 2*xi/f, 1))
-            elif self.filterType == 4 : # Second order - Notch
-                self.num((1/f**2, 0, 1))
-                self.den((1/f**2, 2*xi/f, 1))
-            elif self.filterType == 5 : # Second order - Low Pass Notch
-                self.num((1/f**2, 0, 1))
-                self.den((1/f**2, 2*xi/f, 1))
-            elif self.filterType == 6 and fz != 0: # Second order - High Pass Notch
-                self.num((1/fz**2, 2*(xiz/fz), 1))
-                self.den((1/f**2, 2*(xi/f), 1))
+        
+        if self.filterType == 0 and f!=0: # Second order - High Pass
+            self.num((1, 0, 0))
+            self.den((1/f**2, 2*xi/f, 1))
+        elif self.filterType == 1 and f!=0: # Second order - Low Pass
+            self.num((0, 0, 1))
+            self.den((1/f**2, 2*xi/f, 1))
+        elif self.filterType == 2 and f!=0: # Second order - All Pass
+            self.num((1/f**2, -2*xi/f, 1))
+            self.den((1/f**2, 2*xi/f, 1))
+        elif self.filterType == 3 and fz != 0: # Second order - Band Pass
+            self.num((0, 1, 0))
+            self.den((1/fz**2, 2*xiz/fz, 1))
+        elif self.filterType == 4 and f!=0: # Second order - Notch
+            self.num((1/f**2, 0, 1))
+            self.den((1/f**2, 2*xi/f, 1))
+        elif self.filterType == 5 and f!=0: # Second order - Low Pass Notch
+            self.num((1/f**2, 0, 1))
+            self.den((1/f**2, 2*xi/f, 1))
+        elif self.filterType == 6 and fz != 0 and f!=0: # Second order - High Pass Notch
+            self.num((1/fz**2, 2*(xiz/fz), 1))
+            self.den((1/f**2, 2*(xi/f), 1))
     
     def set_SO_arbitrario(self):
         return                          #TODO: Basicamente la funcion entera :)
@@ -148,7 +118,6 @@ class filtro:
             coeffs.append(0)
         return tuple(coeffs)
 
-
     def match(self, string):
         match = re.search(r'\*\*(\w+)', string) 
         if match:
@@ -159,3 +128,35 @@ class filtro:
                 return 1
             else:
                 return 0
+            
+    def setUp(self):
+        self.filterOrder = 1
+        self.filterType = 0
+        self.gain = 1
+        self.gainType = 2
+        self.fo = 1
+        self.fp = 1
+        self.xio = 0
+        self.xip = 0
+
+        self.numSuperior = ''
+        self.denSuperior = ''
+
+        # Bode 
+        self.Hs = ((0,0,1),(0,0,1))    # (num,den)
+        self.sys = signal.TransferFunction(self.Hs[0], self.Hs[1])
+        self.w, self.Hdb, self.phi = (0,0,0)
+
+        # Input Signal
+        self.t = np.linspace(0, 10, 1000)
+        self.Vin = np.sin(2* np.pi * self.t)
+        self.Vout = 0
+        _, self.Vout, _ = signal.lsim(self.sys, U=self.Vin, T=self.t)
+
+        # Zeros & Poles
+        self.zeros = []
+        self.poles = []
+        self.realZeros = np.real(self.zeros)
+        self.imagZeros = np.imag(self.zeros)
+        self.realPoles = np.real(self.poles)
+        self.imagPoles = np.imag(self.poles)

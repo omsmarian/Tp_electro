@@ -68,10 +68,7 @@ class mywindow(QMainWindow, Ui_Ploter):
             self.fo2.setReadOnly(True)
             self.fp2.setReadOnly(False)
             self.psip.setReadOnly(False)
-        if combobox == self.filtro1:
-            self.updateparams(self.getTabindex())
-        else:
-            self.updateparams(self.getTabindex())
+        self.updateparams(self.getTabindex())
 
     #recibe flag y guarda todos los datos
     def updateparams(self, orden):
@@ -237,7 +234,9 @@ class mywindow(QMainWindow, Ui_Ploter):
         elif index == 1:
             self.lineeditcheck(self.filtro2)
             self.clearall1()
+        self.datos.setUp()
         self.clearplots()
+
 
     def clearplots(self):
         self.bodemodplt.setUp()
