@@ -1,5 +1,6 @@
 import numpy as np
 from scipy import signal
+import re
 
 class filtro:
 
@@ -12,6 +13,9 @@ class filtro:
         self.fp = 1
         self.xio = 0
         self.xip = 0
+
+        self.numSuperior = ''
+        self.denSuperior = ''
 
         # Bode 
         self.Hs = ((0,0,1),(0,0,1))    # (num,den)
@@ -43,9 +47,14 @@ class filtro:
     def update (self):
         if self.filterOrder == 1:
             self.set_PO()
+            #self.numSuperior == ''
+            #self.denSuperior == ''
         elif self.filterOrder == 2:
             self.set_SO()
-        #elif self.filterOrder == 3:     # Sup Order
+            #self.numSuperior == ''
+            #self.denSuperior == ''
+        else:
+            self.set_sup()
         self.updateTF()
         self.realZeros = np.real(self.zeros)
         self.imagZeros = np.imag(self.zeros)
@@ -57,6 +66,7 @@ class filtro:
     def updateTF(self):
         self.sys = signal.TransferFunction(self.Hs[0],self.Hs[1])
         self.w, self.Hdb, self.phi = signal.bode(self.sys)
+        self.zeros, self.poles, _ = signal.tf2zpk(self.Hs[0], self.Hs[1])
     
     def set_PO (self):
         f = self.fp
@@ -76,14 +86,13 @@ class filtro:
             elif self.filterType == 'PoloPO': # First order - Arbitrario - Pole
                 self.num((0, 0, 1))
                 self.den((0, 1, f))
-        self.zeros, self.poles, _ = signal.tf2zpk(self.Hs[0], self.Hs[1])
     
     def set_SO (self):
         xi = self.xip
         xiz = self.xio
         f = self.fp
         fz = self.fo
-        if f!=0 and fz!=0:
+        if f!=0:
             if self.filterType == 0: # Second order - High Pass
                 self.num((1, 0, 0))
                 self.den((1/f**2, 2*xi/f, 1))
@@ -102,13 +111,51 @@ class filtro:
             elif self.filterType == 5 : # Second order - Low Pass Notch
                 self.num((1/f**2, 0, 1))
                 self.den((1/f**2, 2*xi/f, 1))
-            elif self.filterType == 6 : # Second order - High Pass Notch
+            elif self.filterType == 6 and fz != 0: # Second order - High Pass Notch
                 self.num((1/fz**2, 2*(xiz/fz), 1))
                 self.den((1/f**2, 2*(xi/f), 1))
-        self.zeros, self.poles, _ = signal.tf2zpk(self.Hs[0], self.Hs[1])
     
     def set_SO_arbitrario(self):
         return                          #TODO: Basicamente la funcion entera :)
     
-    def set_sup(self, num, den):
-        return
+    def set_sup(self):
+        if self.numSuperior != '':
+            self.num(self.poly_to_tuple(self.numSuperior))
+        
+        if self.denSuperior != '':
+            self.den(self.poly_to_tuple(self.denSuperior))
+
+    def poly_to_tuple(self, string):
+        substring = string.replace('^', '**')
+        degree = self.match(substring)
+        coeffs = []
+
+        if len(coeffs) != degree+1:
+            power = degree
+            for i in range(degree):
+                power = self.match(substring)
+                if power + i != degree:
+                    coeffs.insert(i, 0)                
+                else:
+                    if substring[0] == '0':
+                        coeffs.insert(i, 0)
+                    else:
+                        coeffs.insert(i, float(substring.split("*", 1)[0].strip()))
+                    substring = substring.split("+", 1)[1].strip() if '+' in substring else ''        
+        if substring:
+            coeffs.append(float(substring))
+        else:
+            coeffs.append(0)
+        return tuple(coeffs)
+
+
+    def match(self, string):
+        match = re.search(r'\*\*(\w+)', string) 
+        if match:
+            return int(match.group(1))
+        else:
+            match = re.search(r'(\d+(?:\.\d+)?)\s*\*\s*x', string)  
+            if match:
+                return 1
+            else:
+                return 0

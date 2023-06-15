@@ -90,10 +90,10 @@ class mywindow(QMainWindow, Ui_Ploter):
             self.datos.gain = self.getnum(self.ganancia2)          
             self.datos.gainType = self.getganancia(orden)
             self.datos.filterType = self.getindex(self.filtro2)
-        #else: #filtro de tercer orden
-            #NO TOCAMOS ACÁ TODAVIA PQ ME VA A DAR ALGO
-            #es un update no deberia returnear nada,
-            # calculo q solo sube los datos a la clase filter
+        else: 
+            self.datos.numSuperior = self.numerador.text()
+            self.datos.denSuperior = self.denominador.text()
+            
         self.datos.filterOrder = self.getTabindex() + 1
         if self.datos.update():
             self.updateplots()
