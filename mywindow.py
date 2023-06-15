@@ -36,24 +36,28 @@ class mywindow(QMainWindow, Ui_Ploter):
     
     #deja escribir o no en base al index
     def lineeditcheck(self, combobox):
-        ifcondition = (combobox.currentIndex() == 3 or combobox.currentIndex() == 5 or 
-            combobox.currentIndex() == 6 or combobox.currentIndex() == 7)
-        if ifcondition:
+        if combobox.currentIndex() == 3:
             self.fo1.setReadOnly(False)
+            self.fp2.clear()
+            self.psip.clear()
+            self.fp2.setReadOnly(True)
+            self.psip.setReadOnly(True)
             self.fo2.setReadOnly(False)
             self.psio.setReadOnly(False)
+            self.changename(False)
+        elif combobox.currentIndex() == 7:
             self.fp2.setReadOnly(False)
+            self.psip.setReadOnly(False)
+            self.fo2.setReadOnly(False)
+            self.psio.setReadOnly(False)
+            self.changename(False)
+        elif combobox.currentIndex() == 5 or combobox.currentIndex() == 6:
+            self.clearall2()
+            self.fp2.setReadOnly(False)
+            self.psip.setReadOnly(False)
+            self.fo2.setReadOnly(False)
+            self.psio.setReadOnly(False)
             self.changename(True)
-            if combobox.currentIndex() == 3:
-                self.fo2.clear()
-                self.psip.clear()
-                self.fp2.setReadOnly(True)
-                self.psip.setReadOnly(True)
-                self.changename(False)
-            elif combobox.currentIndex() == 7:
-                self.changename(False)
-            elif combobox.currentIndex() == 5 or combobox.currentIndex() == 6:
-                self.clearall()
         else:
             self.changename(False)
             self.fo1.clear()
@@ -65,21 +69,21 @@ class mywindow(QMainWindow, Ui_Ploter):
             self.fp2.setReadOnly(False)
             self.psip.setReadOnly(False)
         if combobox == self.filtro1:
-            self.updateparams(1)
+            self.updateparams(self.getTabindex())
         else:
-            self.updateparams(2)
+            self.updateparams(self.getTabindex())
 
     #recibe flag y guarda todos los datos
     def updateparams(self, orden):
-        #flags 1, primer orden, 2 segundo, 3 superior
-        if orden == 1:
+        #flags 0, primer orden, 1 segundo, 2 superior
+        if orden == 0:
             self.datos.fo = self.getnum(self.fo1) * self.get_multiplier(self.unitfo1)
             self.datos.fp = self.getnum(self.fp1) * self.get_multiplier(self.unitfp1)      #Eze hace lo q quieras acá lo puse asi para tenerlo
             ganancia = self.getnum(self.ganancia1)          
             gananciatype = self.getganancia(orden)
             self.datos.filterType = self.getindex(self.filtro1)
             self.datos.filterOrder = 1
-        elif orden == 2:
+        elif orden == 1:
             self.datos.fo = self.getnum(self.fo2) * self.get_multiplier(self.unitfo2)
             self.datos.fp = self.getnum(self.fp2) * self.get_multiplier(self.unitfp2)      #Eze acá tmb
             self.datos.xio = self.getnum(self.psio)
@@ -127,40 +131,44 @@ class mywindow(QMainWindow, Ui_Ploter):
     # Funcion *aesthetic* solo para no tener un bloque gigante
     # corre el update si tocas algo de la funcion transferencia
     def checkforparamupdates(self):
+        self.TabWidget.currentChanged.connect(lambda: self.TabUpdate(self.getTabindex()))
         #primer orden
         self.filtro1.activated.connect(lambda: self.lineeditcheck(self.filtro1))
-        self.fo1.editingFinished.connect(lambda: self.updateparams(1))  
-        self.fp1.editingFinished.connect(lambda: self.updateparams(1))  
-        self.ganancia1.editingFinished.connect(lambda: self.updateparams(1))
-        self.bandapa1.toggled.connect(lambda: self.updateparams(1))
-        self.max1.toggled.connect(lambda: self.updateparams(1))
-        self.unitfo1.activated.connect(lambda: self.updateparams(1))
-        self.unitfp1.activated.connect(lambda: self.updateparams(1))
+        self.fo1.editingFinished.connect(lambda: self.updateparams(self.getTabindex()))
+        self.fp1.editingFinished.connect(lambda: self.updateparams(self.getTabindex()))
+        self.ganancia1.editingFinished.connect(lambda: self.updateparams(self.getTabindex()))
+        self.bandapa1.toggled.connect(lambda: self.updateparams(self.getTabindex()))
+        self.max1.toggled.connect(lambda: self.updateparams(self.getTabindex()))
+        self.unitfo1.activated.connect(lambda: self.updateparams(self.getTabindex()))
+        self.unitfp1.activated.connect(lambda: self.updateparams(self.getTabindex()))
         #segundo orden
         self.filtro2.activated.connect(lambda: self.lineeditcheck(self.filtro2))
-        self.fo2.editingFinished.connect(lambda: self.updateparams(2))
-        self.fp2.editingFinished.connect(lambda: self.updateparams(2))
-        self.psio.editingFinished.connect(lambda: self.updateparams(2))
-        self.psip.editingFinished.connect(lambda: self.updateparams(2))
-        self.ganancia2.editingFinished.connect(lambda: self.updateparams(2))
-        self.bandapa2.toggled.connect(lambda: self.updateparams(2))
-        self.max2.toggled.connect(lambda: self.updateparams(2))
-        self.unitfo2.activated.connect(lambda: self.updateparams(2))
-        self.unitfp2.activated.connect(lambda: self.updateparams(2))
+        self.fo2.editingFinished.connect(lambda: self.updateparams(self.getTabindex()))
+        self.fp2.editingFinished.connect(lambda: self.updateparams(self.getTabindex()))
+        self.psio.editingFinished.connect(lambda: self.updateparams(self.getTabindex()))
+        self.psip.editingFinished.connect(lambda: self.updateparams(self.getTabindex()))
+        self.ganancia2.editingFinished.connect(lambda: self.updateparams(self.getTabindex()))
+        self.bandapa2.toggled.connect(lambda: self.updateparams(self.getTabindex()))
+        self.max2.toggled.connect(lambda: self.updateparams(self.getTabindex()))
+        self.unitfo2.activated.connect(lambda: self.updateparams(self.getTabindex()))
+        self.unitfp2.activated.connect(lambda: self.updateparams(self.getTabindex()))
         #orden sup
-        self.numerador.editingFinished.connect(lambda: self.updateparams(3))
-        self.denominador.editingFinished.connect(lambda: self.updateparams(3))
+        self.numerador.editingFinished.connect(lambda: self.updateparams(self.getTabindex()))
+        self.denominador.editingFinished.connect(lambda: self.updateparams(self.getTabindex()))
     
-    #limpia todas las cajas de texto
-    def clearall(self):
-        self.fo1.clear()
-        self.fp1.clear()
+    #limpia todas las cajas de texto de segundo orden
+    def clearall2(self):
         self.fo2.clear()
         self.fp2.clear()
         self.psio.clear()
         self.psip.clear()
-        self.ganancia1.clear()
         self.ganancia2.clear()
+        
+    #limpia todas las cajas de texto de segundo orden
+    def clearall1(self):
+        self.fo1.clear()
+        self.fp1.clear()
+        self.ganancia1.clear()
     
     #updatea los datos de entrada
     def updateinput(self):
@@ -208,11 +216,23 @@ class mywindow(QMainWindow, Ui_Ploter):
         self.horizontalLayout_19.addWidget(self.bodefaseplt)
         self.horizontalLayout_20.addWidget(self.entradaplt)
         self.horizontalLayout_21.addWidget(self.cerospolosplt)
-        
+
+    #actualiza los plots
     def updateplots(self):
         self.bodemodplt.plot(self.datos.w, self.datos.Hdb)
         self.bodefaseplt.plot(self.datos.w, self.datos.phi)
         self.cerospolosplt.plot(self.datos.realZeros, self.datos.imagZeros,
                                 self.datos.realPoles, self.datos.imagPoles)
-        
-        
+    
+    #devuelve el tab en el cual estas
+    def getTabindex(self):
+        return self.TabWidget.currentIndex()
+
+    #chequea los LineEdits para cambiar de tab 
+    def TabUpdate(self, index):
+        if index == 0:
+            self.lineeditcheck(self.filtro1)
+            self.clearall2()
+        elif index == 1:
+            self.lineeditcheck(self.filtro2)
+            self.clearall1()

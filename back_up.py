@@ -523,8 +523,7 @@ class Ui_Ploter(object):
         self.unitampent.setItemText(2, _translate("Ploter", "MV"))
 
         self.update()      #para q sea mas legible el código
-        
-    
+        self.TabWidget.currentChanged.connect(lambda: print(self.TabWidget.currentIndex()))
     #extrae el número ingresado
     def getnum(self, lineedit):
         try:
@@ -573,21 +572,21 @@ class Ui_Ploter(object):
     #recibe flag y guarda todos los datos
     def updateparams(self, orden):
         #flags 1, primer orden, 2 segundo, 3 superior
-        if orden == 1:
+        print(self.TabWidget.currentIndex())
+        if orden == 0:
+            print("estas en uno")
             fo = self.getnum(self.fo1) * self.get_multiplier(self.unitfo1)
             fp = self.getnum(self.fp1) * self.get_multiplier(self.unitfp1)      #Eze hace lo q quieras acá lo puse asi para tenerlo
             ganancia = self.getnum(self.ganancia1)          
             gananciatype = self.getganancia(orden)
             filtertype = self.getindex(self.filtro1)
-        elif orden == 2:
+        elif orden == 1:
+            print("estas en dos")
             fo = self.getnum(self.fo2) * self.get_multiplier(self.unitfo2)
             fp = self.getnum(self.fp2) * self.get_multiplier(self.unitfp2)      #Eze acá tmb
             ganancia = self.getnum(self.ganancia2)          
             gananciatype = self.getganancia(orden)
             filtertype = self.getindex(self.filtro2)
-        print("tab 0: ",self.tab.isVisible())
-        print("tab 1: ",self.tab_2.isVisible())
-        print("tab 2: ",self.tab_3.isVisible())
         #else: #filtro de tercer orden
             #NO TOCAMOS ACÁ TODAVIA PQ ME VA A DAR ALGO
             #es un update no deberia returnear nada,
@@ -627,27 +626,27 @@ class Ui_Ploter(object):
     def checkforparamupdates(self):
         #primer orden
         self.filtro1.activated.connect(lambda: self.lineeditcheck(self.filtro1))
-        self.fo1.editingFinished.connect(lambda: self.updateparams(1))  
-        self.fp1.editingFinished.connect(lambda: self.updateparams(1))  
-        self.ganancia1.editingFinished.connect(lambda: self.updateparams(1))
-        self.bandapa1.toggled.connect(lambda: self.updateparams(1))
-        self.max1.toggled.connect(lambda: self.updateparams(1))
-        self.unitfo1.activated.connect(lambda: self.updateparams(1))
-        self.unitfp1.activated.connect(lambda: self.updateparams(1))
+        self.fo1.editingFinished.connect(lambda: print(self.getnum(self.fo1)))  
+        self.fp1.editingFinished.connect(lambda: self.updateparams(self.TabWidget.currentIndex()))
+        self.ganancia1.editingFinished.connect(lambda: self.updateparams(self.TabWidget.currentIndex()))
+        self.bandapa1.toggled.connect(lambda: self.updateparams(self.TabWidget.currentIndex()))
+        self.max1.toggled.connect(lambda: self.updateparams(self.TabWidget.currentIndex()))
+        self.unitfo1.activated.connect(lambda: self.updateparams(self.TabWidget.currentIndex()))
+        self.unitfp1.activated.connect(lambda: self.updateparams(self.TabWidget.currentIndex()))
         #segundo orden
         self.filtro2.activated.connect(lambda: self.lineeditcheck(self.filtro2))
-        self.fo2.editingFinished.connect(lambda: self.updateparams(2))
-        self.fp2.editingFinished.connect(lambda: self.updateparams(2))
-        self.psio.editingFinished.connect(lambda: self.updateparams(2))
-        self.psip.editingFinished.connect(lambda: self.updateparams(2))
-        self.ganancia2.editingFinished.connect(lambda: self.updateparams(2))
-        self.bandapa2.toggled.connect(lambda: self.updateparams(2))
-        self.max2.toggled.connect(lambda: self.updateparams(2))
-        self.unitfo2.activated.connect(lambda: self.updateparams(2))
-        self.unitfp2.activated.connect(lambda: self.updateparams(2))
+        self.fo2.editingFinished.connect(lambda: self.updateparams(self.TabWidget.currentIndex()))
+        self.fp2.editingFinished.connect(lambda: self.updateparams(self.TabWidget.currentIndex()))
+        self.psio.editingFinished.connect(lambda: self.updateparams(self.TabWidget.currentIndex()))
+        self.psip.editingFinished.connect(lambda: self.updateparams(self.TabWidget.currentIndex()))
+        self.ganancia2.editingFinished.connect(lambda: self.updateparams(self.TabWidget.currentIndex()))
+        self.bandapa2.toggled.connect(lambda: self.updateparams(self.TabWidget.currentIndex()))
+        self.max2.toggled.connect(lambda: self.updateparams(self.TabWidget.currentIndex()))
+        self.unitfo2.activated.connect(lambda: self.updateparams(self.TabWidget.currentIndex()))
+        self.unitfp2.activated.connect(lambda: self.updateparams(self.TabWidget.currentIndex()))
         #orden sup
-        self.numerador.editingFinished.connect(lambda: self.updateparams(3))
-        self.denominador.editingFinished.connect(lambda: self.updateparams(3))
+        self.numerador.editingFinished.connect(lambda: self.updateparams(self.TabWidget.currentIndex()))
+        self.denominador.editingFinished.connect(lambda: self.updateparams(self.TabWidget.currentIndex()))
     
     #limpia todas las cajas de texto
     def clearall(self):
@@ -677,54 +676,6 @@ class Ui_Ploter(object):
     def update(self):
         self.checkforinputupdates()
         self.checkforparamupdates()
-        
-        
-    #def plot (self):
-    #     
-    #    fo = 100/(2*np.pi)
-    #    self.meme.set_SO('PASO', fo, 0.5)
-#
-    #    self.axes_module.clear()
-    #    self.axes_fase.clear()
-    #    self.axes_entrada.clear()
-    #    self.axes_cerospolos.clear()
-#
-    #    # Module
-    #    self.axes_module.semilogx(self.meme.w, self.meme.Hdb)
-    #    self.axes_module.set_xlabel('σ')
-    #    self.axes_module.set_ylabel('jω')
-    #    self.axes_module.grid()
-    #    self.bodemodplt.set_tight_layout('True')
-    #    self.canvas1.draw()
-    #    
-    #    # Phase
-    #    self.axes_fase.semilogx(self.meme.w, self.meme.phi)
-    #    self.axes_fase.set_xlabel('σ')
-    #    self.axes_fase.set_ylabel('jω')
-    #    self.axes_fase.grid(True)
-    #    self.bodefaseplt.set_tight_layout('True')
-    #    self.canvas2.draw()
-    #    
-    #    # Poles & zeros
-    #    self.axes_cerospolos.scatter(np.real(self.meme.zeros), np.imag(self.meme.zeros), marker = 'o', color = 'blue', label = 'Ceros')
-    #    self.axes_cerospolos.scatter(np.real(self.meme.poles), np.imag(self.meme.poles), marker = 'x', color = 'red', label = 'Polos')
-    #    self.axes_cerospolos.set_xlabel('σ')
-    #    self.axes_cerospolos.set_ylabel('jω')
-    #    self.axes_cerospolos.axhline(0, color='black', linewidth=1)
-    #    self.axes_cerospolos.axvline(0, color='black', linewidth=1)
-    #    self.axes_cerospolos.grid(True)
-    #    self.cerospolosplt.set_tight_layout('True')
-    #    self.canvas4.draw()
-#
-        # Out        
-        #self.axes_entrada.plot(meme.t, meme.Vin, label='Entrada', color='red')
-        #self.axes_entrada.plot(meme.t, meme.Vout, label='Salida', color='blue')
-        #self.axes_entrada.set_xlabel('σ')
-        #self.axes_entrada.set_ylabel('jω')
-        #self.axes_entrada.grid(True)
-        #self.entradaplt.set_tight_layout('True')
-        #self.canvas3.draw()
-            
 
 if __name__ == "__main__":
     import sys

@@ -487,7 +487,6 @@ class Ui_Ploter(object):
         self.unitampent.setItemText(0, _translate("Ploter", "V"))
         self.unitampent.setItemText(1, _translate("Ploter", "KV"))
         self.unitampent.setItemText(2, _translate("Ploter", "MV"))
-        self.TabWidget.isTabVisible
 
 if __name__ == "__main__":
     import sys
