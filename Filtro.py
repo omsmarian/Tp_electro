@@ -7,6 +7,7 @@ class filtro:
         self.filterOrder = 1
         self.filterType = 0
         self.gain = 1
+        self.gainType = 2
         self.fo = 1
         self.fp = 1
         self.xio = 0
@@ -50,50 +51,60 @@ class filtro:
         self.imagZeros = np.imag(self.zeros)
         self.realPoles = np.real(self.poles)
         self.imagPoles = np.imag(self.poles)
+
+        return True             #TODO: devolver flag si hay error
     
     def updateTF(self):
         self.sys = signal.TransferFunction(self.Hs[0],self.Hs[1])
         self.w, self.Hdb, self.phi = signal.bode(self.sys)
     
     def set_PO (self):
-        wo = 2*np.pi*self.fp
-        if wo != 0:
+        f = self.fp
+        if f != 0:
             if self.filterType == 0 : # First order - High Pass
                 self.num((0,1,0))
-                self.den((0, 1/wo, 1))
+                self.den((0, 1/f, 1))
             elif self.filterType == 1 : # First order - Low Pass 
                 self.num((0,0,1))
-                self.den((0, 1/wo, 1))
+                self.den((0, 1/f, 1))
             elif self.filterType == 2: # First order - All Pass
-                self.num((0, 1/wo, -1))
-                self.den((0, 1/wo, 1))   
+                self.num((0, 1/f, -1))
+                self.den((0, 1/f, 1))   
             elif self.filterType == 'CeroPO': # First order - Arbitrario - Zero
-                self.num((0, 1, wo))
+                self.num((0, 1, f))
                 self.den((0, 0, 1))
             elif self.filterType == 'PoloPO': # First order - Arbitrario - Pole
                 self.num((0, 0, 1))
-                self.den((0, 1, wo))
+                self.den((0, 1, f))
         self.zeros, self.poles, _ = signal.tf2zpk(self.Hs[0], self.Hs[1])
     
     def set_SO (self):
         xi = self.xip
-        wo = 2*np.pi*self.fp
-        if wo != 0:
+        xiz = self.xio
+        f = self.fp
+        fz = self.fo
+        if f!=0 and fz!=0:
             if self.filterType == 0: # Second order - High Pass
                 self.num((1, 0, 0))
-                self.den((1/wo**2, 2*xi/wo, 1))
+                self.den((1/f**2, 2*xi/f, 1))
             elif self.filterType == 1: # Second order - Low Pass
                 self.num((0, 0, 1))
-                self.den((1/wo**2, 2*xi/wo, 1))
+                self.den((1/f**2, 2*xi/f, 1))
             elif self.filterType == 2: # Second order - All Pass
-                self.num((1/wo**2, -2*xi/wo, 1))
-                self.den((1/wo**2, 2*xi/wo, 1))
+                self.num((1/f**2, -2*xi/f, 1))
+                self.den((1/f**2, 2*xi/f, 1))
             elif self.filterType == 3: # Second order - Band Pass
                 self.num((0, 1, 0))
-                self.den((1/wo**2, 2*xi/wo, 1))
+                self.den((1/f**2, 2*xi/f, 1))
             elif self.filterType == 4 : # Second order - Notch
-                self.num((1/wo**2, 0, 1))
-                self.den((1/wo**2, 2*xi/wo, 1))
+                self.num((1/f**2, 0, 1))
+                self.den((1/f**2, 2*xi/f, 1))
+            elif self.filterType == 5 : # Second order - Low Pass Notch
+                self.num((1/f**2, 0, 1))
+                self.den((1/f**2, 2*xi/f, 1))
+            elif self.filterType == 6 : # Second order - High Pass Notch
+                self.num((1/fz**2, 2*(xiz/fz), 1))
+                self.den((1/f**2, 2*(xi/f), 1))
         self.zeros, self.poles, _ = signal.tf2zpk(self.Hs[0], self.Hs[1])
     
     def set_SO_arbitrario(self):
@@ -101,41 +112,3 @@ class filtro:
     
     def set_sup(self, num, den):
         return
-
-    
-####################   TEST   ####################
-   
-#def plot(filtro):
-#    fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(8, 6))
-#
-#    axes[0, 0].semilogx(filtro.w, filtro.Hdb)
-#    axes[0, 0].grid(True)
-#    #plt.xlim(0,1000)
-#    axes[1, 0].semilogx(filtro.w, filtro.phi)
-#    axes[1, 0].grid(True)
-#    
-#    axes[0, 1].scatter(np.real(filtro.zeros), np.imag(filtro.zeros), marker = 'o', color = 'blue', label = 'Ceros')
-#    axes[0, 1].scatter(np.real(filtro.poles), np.imag(filtro.poles), marker = 'x', color = 'red', label = 'Polos')
-#    axes[0, 1].set_xlabel('σ')
-#    axes[0, 1].set_ylabel('jω')
-#    axes[0, 1].axhline(0, color='black', linewidth=1)
-#    axes[0, 1].axvline(0, color='black', linewidth=1)
-#    axes[0, 1].grid(True)
-#    
-#    axes[1, 1].plot(filtro.t, filtro.Vin, label='Entrada', color='red')
-#    axes[1, 1].plot(filtro.t, filtro.Vout, label='Salida', color='blue')
-#    axes[1, 1].grid(True)
-#
-#    fig.tight_layout()
-#    plt.show()
-#    return
-
-#meme = filtro()
-#
-#wo = 100
-#fo = wo/(2*np.pi)
-#xi = 0.5
-#
-#meme.set_PO('CeroPO', fo)
-#
-#plot(meme)

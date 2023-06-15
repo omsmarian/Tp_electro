@@ -78,26 +78,27 @@ class mywindow(QMainWindow, Ui_Ploter):
         #flags 0, primer orden, 1 segundo, 2 superior
         if orden == 0:
             self.datos.fo = self.getnum(self.fo1) * self.get_multiplier(self.unitfo1)
-            self.datos.fp = self.getnum(self.fp1) * self.get_multiplier(self.unitfp1)      #Eze hace lo q quieras acá lo puse asi para tenerlo
-            ganancia = self.getnum(self.ganancia1)          
-            gananciatype = self.getganancia(orden)
+            self.datos.fp = self.getnum(self.fp1) * self.get_multiplier(self.unitfp1)    
+            self.datos.gain = self.getnum(self.ganancia1)          
+            self.datos.gainType = self.getganancia(orden)
             self.datos.filterType = self.getindex(self.filtro1)
-            self.datos.filterOrder = 1
         elif orden == 1:
             self.datos.fo = self.getnum(self.fo2) * self.get_multiplier(self.unitfo2)
-            self.datos.fp = self.getnum(self.fp2) * self.get_multiplier(self.unitfp2)      #Eze acá tmb
+            self.datos.fp = self.getnum(self.fp2) * self.get_multiplier(self.unitfp2)     
             self.datos.xio = self.getnum(self.psio)
             self.datos.xip = self.getnum(self.psip)
-            ganancia = self.getnum(self.ganancia2)          
-            gananciatype = self.getganancia(orden)
+            self.datos.gain = self.getnum(self.ganancia2)          
+            self.datos.gainType = self.getganancia(orden)
             self.datos.filterType = self.getindex(self.filtro2)
-            self.datos.filterOrder = 2
         #else: #filtro de tercer orden
             #NO TOCAMOS ACÁ TODAVIA PQ ME VA A DAR ALGO
             #es un update no deberia returnear nada,
             # calculo q solo sube los datos a la clase filter
-        self.datos.update()
-        self.updateplots()
+        self.datos.filterOrder = self.getTabindex() + 1
+        if self.datos.update():
+            self.updateplots()
+        else:
+            print("ERROR")
     
     #returns multiplier
     def get_multiplier(self, combobox):
@@ -236,3 +237,10 @@ class mywindow(QMainWindow, Ui_Ploter):
         elif index == 1:
             self.lineeditcheck(self.filtro2)
             self.clearall1()
+        self.clearplots()
+
+    def clearplots(self):
+        self.bodemodplt.setUp()
+        self.bodefaseplt.setUp()
+        self.cerospolosplt.setUp()
+        self.entradaplt.setUp()
