@@ -34,6 +34,7 @@ class filtro:
         return True             #TODO: devolver flag si hay error
     
     def updateTF(self):
+        self.gain()
         self.sys = signal.TransferFunction(self.Hs[0],self.Hs[1])
         self.w, self.Hdb, self.phi = signal.bode(self.sys)
         self.zeros, self.poles, _ = signal.tf2zpk(self.Hs[0], self.Hs[1])
@@ -132,8 +133,8 @@ class filtro:
     def setUp(self):
         self.filterOrder = 1
         self.filterType = 0
-        self.gain = 1
-        self.gainType = 2
+        self.gainBW = 1
+        self.gainType = 1
         self.fo = 1
         self.fp = 1
         self.xio = 0
@@ -160,3 +161,11 @@ class filtro:
         self.imagZeros = np.imag(self.zeros)
         self.realPoles = np.real(self.poles)
         self.imagPoles = np.imag(self.poles)
+
+    def gain (self):
+        if self.gainType == 1:
+            self.gainBW = tuple(self.gainBW * element for element in self.Hs[0])
+            print(self.gainBW)
+            print(self.Hs[0])
+        elif self.gainType == 2:
+            print('La verda no se porque entra aca')
