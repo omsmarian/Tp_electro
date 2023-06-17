@@ -62,6 +62,9 @@ class salida:
             self.pulse()
         elif self.signalType == 2:
             self.periodic_pulse()
+        elif self.signalType == 3:
+            print('triangular')
+            self.periodic_triangular()
         (multiplier, prefix) = mult_prefix(self.t[int(len(self.t)/2)])
         self.t=self.t/multiplier
         self.prefix = prefix
@@ -74,6 +77,9 @@ class salida:
     
     def pulse(self):
         self.input = self.amp * signal.square(self.t, duty=1)
-        
+
     def periodic_pulse(self):
         return
+    
+    def periodic_triangular(self):
+        self.input = self.amp * signal.sawtooth(self.t, 0.5)
