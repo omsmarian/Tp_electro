@@ -50,17 +50,18 @@ class PlotBodeFase(PlotCanvas):
 class PlotEntrada(PlotCanvas):
     def __init__(self):
         super().__init__()
-        self.setUp()
+        self.setUp('')
     
-    def plot(self, x, y, color, label):
-        self.setUp()
-        self.axes.plot(x, y, color, label)
+    def plot(self, t, yEntrada, ySalida, prefix):
+        self.setUp(prefix)
+        self.axes.plot(t, yEntrada, color = 'red', label = 'Señal de entrada')
+        self.axes.plot(t, ySalida, label = 'Señal de salida')
         self.fig.canvas.draw()
 
-    def setUp(self):        
+    def setUp(self, prefix):        
         self.axes.clear()
         self.axes.grid(True)
-        self.axes.set_xlabel('Frecuencia [Hz]')
+        self.axes.set_xlabel(f'Tiempo [{prefix}s]')
         self.axes.set_ylabel('Voltaje [V]')
         self.fig.canvas.draw()
 

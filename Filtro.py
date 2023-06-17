@@ -17,12 +17,8 @@ class filtro:
     def update (self):
         if self.filterOrder == 1:
             self.set_PO()
-            #self.numSuperior == ''
-            #self.denSuperior == ''
         elif self.filterOrder == 2:
             self.set_SO()
-            #self.numSuperior == ''
-            #self.denSuperior == ''
         else:
             self.set_sup()
         self.updateTF()
@@ -34,7 +30,7 @@ class filtro:
         return True             #TODO: devolver flag si hay error
     
     def updateTF(self):
-        self.gain()
+        #self.gain()
         self.sys = signal.TransferFunction(self.Hs[0],self.Hs[1])
         self.w, self.Hdb, self.phi = signal.bode(self.sys)
         self.zeros, self.poles, _ = signal.tf2zpk(self.Hs[0], self.Hs[1])
@@ -51,12 +47,6 @@ class filtro:
             elif self.filterType == 2: # First order - All Pass
                 self.num((0, 1/f, -1))
                 self.den((0, 1/f, 1))   
-            elif self.filterType == 'CeroPO': # First order - Arbitrario - Zero
-                self.num((0, 1, f))
-                self.den((0, 0, 1))
-            elif self.filterType == 'PoloPO': # First order - Arbitrario - Pole
-                self.num((0, 0, 1))
-                self.den((0, 1, f))
     
     def set_SO (self):
         xi = self.xip
@@ -147,12 +137,6 @@ class filtro:
         self.Hs = ((0,0,1),(0,0,1))    # (num,den)
         self.sys = signal.TransferFunction(self.Hs[0], self.Hs[1])
         self.w, self.Hdb, self.phi = (0,0,0)
-
-        # Input Signal
-        self.t = np.linspace(0, 10, 1000)
-        self.Vin = np.sin(2* np.pi * self.t)
-        self.Vout = 0
-        _, self.Vout, _ = signal.lsim(self.sys, U=self.Vin, T=self.t)
 
         # Zeros & Poles
         self.zeros = []

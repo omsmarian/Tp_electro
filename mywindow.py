@@ -4,6 +4,7 @@ from ui import Ui_Ploter
 import ploter
 from Filtro import filtro
 from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigatorTool
+from Salida import salida
 
 class mywindow(QMainWindow, Ui_Ploter):
 
@@ -12,6 +13,7 @@ class mywindow(QMainWindow, Ui_Ploter):
         self.setupUi(self)
         self.setWindowIcon(QtGui.QIcon('descarga.jpg'))
         self.datos = filtro()
+        self.salida = salida()
         self.initplots()
         self.update()
     
@@ -67,7 +69,7 @@ class mywindow(QMainWindow, Ui_Ploter):
         #flags 0, primer orden, 1 segundo, 2 superior
         if orden == 0:
             self.datos.fp = self.getnum(self.fp1) * self.get_multiplier(self.unitfp1)    
-            self.datos.gain = self.getnum(self.ganancia1)          
+            self.datos.gainBW = self.getnum(self.ganancia1)          
             self.datos.gainType = self.getganancia(orden)
             self.datos.filterType = self.getindex(self.filtro1)
         elif orden == 1:
@@ -75,7 +77,7 @@ class mywindow(QMainWindow, Ui_Ploter):
             self.datos.fp = self.getnum(self.fp2) * self.get_multiplier(self.unitfp2)     
             self.datos.xio = self.getnum(self.psio)
             self.datos.xip = self.getnum(self.psip)
-            self.datos.gain = self.getnum(self.ganancia2)          
+            self.datos.gainBW = self.getnum(self.ganancia2)          
             self.datos.gainType = self.getganancia(orden)
             self.datos.filterType = self.getindex(self.filtro2)
         else: 
@@ -158,9 +160,14 @@ class mywindow(QMainWindow, Ui_Ploter):
     
     #updatea los datos de entrada
     def updateinput(self):
-        frec = self.getnum(self.frecent) * self.get_multiplier(self.unitfrecent)
-        amp = self.getnum(self.ampent) * self.get_multiplier(self.unitampent)
-        entradatype = self.getindex(self.entradabox)
+        self.salida.frecuency(self.getnum(self.frecent) * 
+                              self.get_multiplier(self.unitfrecent), self.datos)
+        self.salida.amplitude(self.getnum(self.ampent) * 
+                              self.get_multiplier(self.unitampent), self.datos)
+        #FALTA DESFASAJE
+        self.salida.signalType = self.getindex(self.entradabox)
+        self.updateplots()
+
         # acá lo subimos a filter tmb
     
     #chequea si se modifico algo de la entrada
@@ -209,6 +216,8 @@ class mywindow(QMainWindow, Ui_Ploter):
         self.bodefaseplt.plot(self.datos.w, self.datos.phi)
         self.cerospolosplt.plot(self.datos.realZeros, self.datos.imagZeros,
                                 self.datos.realPoles, self.datos.imagPoles)
+        self.entradaplt.plot(self.salida.t, self.salida.input, self.salida.output,
+                             self.salida.prefix)
     
     #devuelve el tab en el cual estas
     def getTabindex(self):
@@ -235,4 +244,4 @@ class mywindow(QMainWindow, Ui_Ploter):
         self.bodemodplt.setUp()
         self.bodefaseplt.setUp()
         self.cerospolosplt.setUp()
-        self.entradaplt.setUp()
+        self.entradaplt.setUp('')
