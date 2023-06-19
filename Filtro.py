@@ -30,7 +30,9 @@ class filtro:
         return True             #TODO: devolver flag si hay error
     
     def updateTF(self):
-        #self.gain()
+        self.sys = signal.TransferFunction(self.Hs[0],self.Hs[1])
+        self.w, self.Hdb, self.phi = signal.bode(self.sys)
+        self.gain()
         self.sys = signal.TransferFunction(self.Hs[0],self.Hs[1])
         self.w, self.Hdb, self.phi = signal.bode(self.sys)
         self.zeros, self.poles, _ = signal.tf2zpk(self.Hs[0], self.Hs[1])
@@ -76,9 +78,6 @@ class filtro:
             self.num((1/fz**2, 2*(xiz/fz), 1))
             self.den((1/f**2, 2*(xi/f), 1))
     
-    def set_SO_arbitrario(self):
-        return                          #TODO: Basicamente la funcion entera :)
-    
     def set_sup(self):
         if self.numSuperior != '':
             self.num(self.poly_to_tuple(self.numSuperior))
@@ -114,7 +113,7 @@ class filtro:
         if match:
             return int(match.group(1))
         else:
-            match = re.search(r'(\d+(?:\.\d+)?)\s*\*\s*x', string)  
+            match = re.search(r'(\d+(?:\.\d+)?)\s*\*\s*s', string)  
             if match:
                 return 1
             else:
@@ -123,8 +122,9 @@ class filtro:
     def setUp(self):
         self.filterOrder = 1
         self.filterType = 0
-        self.gainBW = 1
-        self.gainType = 1
+        self.gainBW = 0
+        self.gainMax = 0
+        self.gainType = 0
         self.fo = 1
         self.fp = 1
         self.xio = 0
@@ -145,11 +145,12 @@ class filtro:
         self.imagZeros = np.imag(self.zeros)
         self.realPoles = np.real(self.poles)
         self.imagPoles = np.imag(self.poles)
-
-    def gain (self):
+        
+    def gain(self):
         if self.gainType == 1:
-            self.gainBW = tuple(self.gainBW * element for element in self.Hs[0])
-            print(self.gainBW)
-            print(self.Hs[0])
+            k = 10 ** (self.gainBW/20)
+            self.num(tuple(k * element for element in self.Hs[0]))
         elif self.gainType == 2:
-            print('La verda no se porque entra aca')
+            maxValue = max(self.Hdb)
+            k = 10 ** ((self.gainMax-maxValue)/20)     
+            self.num(tuple(k * element for element in self.Hs[0]))   

@@ -68,16 +68,14 @@ class mywindow(QMainWindow, Ui_Ploter):
     def updateparams(self, orden):
         #flags 0, primer orden, 1 segundo, 2 superior
         if orden == 0:
-            self.datos.fp = self.getnum(self.fp1) * self.get_multiplier(self.unitfp1)    
-            self.datos.gainBW = self.getnum(self.ganancia1)          
+            self.datos.fp = self.getnum(self.fp1) * self.get_multiplier(self.unitfp1)          
             self.datos.gainType = self.getganancia(orden)
             self.datos.filterType = self.getindex(self.filtro1)
         elif orden == 1:
             self.datos.fo = self.getnum(self.fo2) * self.get_multiplier(self.unitfo2)
             self.datos.fp = self.getnum(self.fp2) * self.get_multiplier(self.unitfp2)     
             self.datos.xio = self.getnum(self.psio)
-            self.datos.xip = self.getnum(self.psip)
-            self.datos.gainBW = self.getnum(self.ganancia2)          
+            self.datos.xip = self.getnum(self.psip)        
             self.datos.gainType = self.getganancia(orden)
             self.datos.filterType = self.getindex(self.filtro2)
         else: 
@@ -105,19 +103,25 @@ class mywindow(QMainWindow, Ui_Ploter):
 
     #returns ganancia type
     def getganancia(self, ordenflag):
-        if ordenflag == 1:
+        gananciatype = self.datos.gainType
+        if ordenflag == 0:
             # 1 banda pasante, 2 maxima
             if self.bandapa1.isChecked():
+                self.datos.gainBW = self.getnum(self.ganancia1) 
                 gananciatype = 1
-            else:
+            elif self.max1.isChecked():
+                self.datos.gainMax = self.getnum(self.ganancia1)
                 gananciatype = 2
-        else:
+        elif ordenflag == 1:
             # 1 banda pasante, 2 maxima
             if self.bandapa2.isChecked():
+                self.datos.gainBW = self.getnum(self.ganancia2)
                 gananciatype = 1
-            else:
+            elif self.max2.isChecked():
+                self.datos.gainMax = self.getnum(self.ganancia2)
                 gananciatype = 2
         return gananciatype
+               
     
     # Funcion *aesthetic* solo para no tener un bloque gigante
     # corre el update si tocas algo de la funcion transferencia
