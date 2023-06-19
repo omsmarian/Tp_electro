@@ -168,11 +168,9 @@ class mywindow(QMainWindow, Ui_Ploter):
                               self.get_multiplier(self.unitfrecent), self.datos)
         self.salida.amplitude(self.getnum(self.ampent) * 
                               self.get_multiplier(self.unitampent), self.datos)
-        #FALTA DESFASAJE
         self.salida.signalType = self.getindex(self.entradabox)
+        self.salida.update(self.datos)
         self.updateplots()
-
-        # acá lo subimos a filter tmb
     
     #chequea si se modifico algo de la entrada
     def checkforinputupdates(self):
@@ -222,8 +220,8 @@ class mywindow(QMainWindow, Ui_Ploter):
         self.bodefaseplt.plot(self.datos.w, self.datos.phi)
         self.cerospolosplt.plot(self.datos.realZeros, self.datos.imagZeros,
                                 self.datos.realPoles, self.datos.imagPoles)
-        self.entradaplt.plot(self.salida.t, self.salida.input, self.salida.output,
-                             self.salida.prefix)
+        self.entradaplt.plot(self.salida.t, self.salida.tout ,self.salida.input, 
+                             self.salida.output, self.salida.prefix)
     
     #devuelve el tab en el cual estas
     def getTabindex(self):
