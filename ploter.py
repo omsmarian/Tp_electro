@@ -23,7 +23,7 @@ class PlotBodeMod(PlotCanvas):
 
     def setUp(self):
         self.axes.clear()
-        self.axes.grid(True)
+        self.axes.grid(True, which="both", linestyle='--')
         self.axes.set_xlabel('Frecuencia [Hz]')
         self.axes.set_ylabel('|H| [dB]')
         self.fig.canvas.draw()
@@ -41,7 +41,7 @@ class PlotBodeFase(PlotCanvas):
 
     def setUp(self):
         self.axes.clear()
-        self.axes.grid(True)
+        self.axes.grid(True, which="both", linestyle='--')
         self.axes.set_xlabel('Frecuencia [Hz]')
         self.axes.set_ylabel('Fase [°]')
         self.fig.canvas.draw()
@@ -52,15 +52,15 @@ class PlotEntrada(PlotCanvas):
         super().__init__()
         self.setUp('')
     
-    def plot(self, t, yEntrada, ySalida, prefix):
+    def plot(self, t, tout, yEntrada, ySalida, prefix):
         self.setUp(prefix)
         self.axes.plot(t, yEntrada, color = 'red', label = 'Señal de entrada')
-        self.axes.plot(t, ySalida, label = 'Señal de salida')
+        self.axes.plot(tout, ySalida, label = 'Señal de salida')
         self.fig.canvas.draw()
 
     def setUp(self, prefix):        
         self.axes.clear()
-        self.axes.grid(True)
+        self.axes.grid(True, linestyle='--')
         self.axes.set_xlabel(f'Tiempo [{prefix}s]')
         self.axes.set_ylabel('Voltaje [V]')
         self.fig.canvas.draw()
@@ -79,7 +79,7 @@ class PlotCerosPolos(PlotCanvas):
 
     def setUp(self):
         self.axes.clear()
-        self.axes.grid(True)
+        self.axes.grid(True, linestyle='--')
         self.axes.axhline(0, color='black', linewidth=1)
         self.axes.axvline(0, color='black', linewidth=1)
         self.axes.set_xlabel('σ')
