@@ -178,7 +178,9 @@ class mywindow(QMainWindow, Ui_Ploter):
     def checkforinputupdates(self):
         self.entradabox.activated.connect(lambda: self.updateinput())
         self.frecent.editingFinished.connect(lambda: self.updateinput())
+        self.unitfrecent.activated.connect(lambda: self.updateinput())
         self.ampent.editingFinished.connect(lambda: self.updateinput())
+        self.unitampent.activated.connect(lambda: self.updateinput())
     
     #update *aesthetic* para q se vea lindo
     def update(self):
