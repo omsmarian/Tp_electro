@@ -86,8 +86,6 @@ class mywindow(QMainWindow, Ui_Ploter):
         if self.datos.update():
             self.updateinput()
             self.updateplots()
-        else:
-            print("ERROR")
     
     #returns multiplier
     def get_multiplier(self, combobox):
