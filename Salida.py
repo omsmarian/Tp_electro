@@ -39,19 +39,17 @@ class salida:
         self.t = np.linspace(0, 2*self.period, 500)
         self.input = np.zeros(len(self.t))
         self.output = 0 * self.t
-        self.tout = []
+        self.tout = self.t
         self.signalType = 0
         self.prefix = ''
 
-    def frecuency(self, f, filtro):
+    def frecuency(self, f):
         if f != 0:
             self.f = f 
-        self.update(filtro)
 
-    def amplitude(self, amp, filtro):
+    def amplitude(self, amp):
         if amp != 0:
             self.amp = amp
-        self.update(filtro)
 
     def update(self, filtro):
         self.period = 1/self.f
@@ -80,7 +78,6 @@ class salida:
         self.t = self.t/multiplier
         self.tout = self.tout/multiplier
         self.prefix = prefix
-                        #TODO: Ver bien que es _, creo que ahi va de vuelta Vin
 
     def sine(self):
         self.input = self.amp * np.sin(2*np.pi*self.f*self.t)

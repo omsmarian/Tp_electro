@@ -84,6 +84,7 @@ class mywindow(QMainWindow, Ui_Ploter):
             
         self.datos.filterOrder = self.getTabindex() + 1
         if self.datos.update():
+            self.updateinput()
             self.updateplots()
         else:
             print("ERROR")
@@ -165,9 +166,9 @@ class mywindow(QMainWindow, Ui_Ploter):
     #updatea los datos de entrada
     def updateinput(self):
         self.salida.frecuency(self.getnum(self.frecent) * 
-                              self.get_multiplier(self.unitfrecent), self.datos)
+                              self.get_multiplier(self.unitfrecent))
         self.salida.amplitude(self.getnum(self.ampent) * 
-                              self.get_multiplier(self.unitampent), self.datos)
+                              self.get_multiplier(self.unitampent))
         self.salida.signalType = self.getindex(self.entradabox)
         self.salida.update(self.datos)
         self.updateplots()

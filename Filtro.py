@@ -69,11 +69,11 @@ class filtro:
             self.num((0, 1, 0))
             self.den((1/fz**2, 2*xiz/fz, 1))
         elif self.filterType == 4 and f!=0: # Second order - Notch
-            self.num((1/f**2, 0, 1))
-            self.den((1/f**2, 2*xi/f, 1))
-        elif self.filterType == 5 and f!=0: # Second order - Low Pass Notch
-            self.num((1/f**2, 0, 1))
-            self.den((1/f**2, 2*xi/f, 1))
+            self.num((1, 0, f**2))
+            self.den((1, 2*xi*f, f**2))
+        elif self.filterType == 5 and f!=0 and fz!=0: # Second order - Low Pass Notch
+            self.num((1/fz**2, 2*(xiz/fz), 1))
+            self.den((1/f**2, 2*(xi/f), 1))
         elif self.filterType == 6 and fz != 0 and f!=0: # Second order - High Pass Notch
             self.num((1/fz**2, 2*(xiz/fz), 1))
             self.den((1/f**2, 2*(xi/f), 1))
