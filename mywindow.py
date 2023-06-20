@@ -163,6 +163,14 @@ class mywindow(QMainWindow, Ui_Ploter):
         self.fp1.clear()
         self.ganancia1.clear()
     
+    def checkinput(self):
+        if self.entradabox.currentIndex() == 1:
+            self.frecent.clear()
+            self.frecent.setReadOnly(True)
+        else:
+            self.frecent.setReadOnly(False)
+        self.updateinput()
+    
     #updatea los datos de entrada
     def updateinput(self):
         self.salida.frecuency(self.getnum(self.frecent) * 
@@ -175,7 +183,7 @@ class mywindow(QMainWindow, Ui_Ploter):
     
     #chequea si se modifico algo de la entrada
     def checkforinputupdates(self):
-        self.entradabox.activated.connect(lambda: self.updateinput())
+        self.entradabox.activated.connect(lambda: self.checkinput())
         self.frecent.editingFinished.connect(lambda: self.updateinput())
         self.unitfrecent.activated.connect(lambda: self.updateinput())
         self.ampent.editingFinished.connect(lambda: self.updateinput())
