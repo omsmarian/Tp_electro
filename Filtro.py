@@ -18,8 +18,7 @@ class filtro:
         elif self.filterOrder == 2:
             self.set_SO()
         else:
-            self.set_sup()
-            if self.denOrder < self.numOrder:
+            if self.set_sup() == False or self.denOrder < self.numOrder:
                 return False
         self.updateTF()
         self.realZeros = np.real(self.zeros)
@@ -27,7 +26,7 @@ class filtro:
         self.realPoles = np.real(self.poles)
         self.imagPoles = np.imag(self.poles)
 
-        return True             #TODO: devolver flag si hay error
+        return 1             #TODO: devolver flag si hay error
     
     def updateTF(self):
         self.sys = signal.TransferFunction(self.Hs[0],self.Hs[1])
@@ -56,45 +55,40 @@ class filtro:
         fz = self.fo
         
         if self.filterType == 0 and f!=0: # Second order - High Pass
-            self.num(list(1, 0, 0))
-            self.den(list(1/f**2, 2*xi/f, 1))
+            self.num([1, 0, 0])
+            self.den([1/f**2, 2*xi/f, 1])
         elif self.filterType == 1 and f!=0: # Second order - Low Pass
-            self.num(list(0, 0, 1))
-            self.den(list(1/f**2, 2*xi/f, 1))
+            self.num([0, 0, 1])
+            self.den([1/f**2, 2*xi/f, 1])
         elif self.filterType == 2 and f!=0: # Second order - All Pass
-            self.num(list(1/f**2, -2*xi/f, 1))
-            self.den(list(1/f**2, 2*xi/f, 1))
+            self.num([1/f**2, -2*xi/f, 1])
+            self.den([1/f**2, 2*xi/f, 1])
         elif self.filterType == 3 and fz != 0: # Second order - Band Pass
-            self.num(list(0, 1, 0))
-            self.den(list(1/fz**2, 2*xiz/fz, 1))
+            self.num([0, 1, 0])
+            self.den([1/fz**2, 2*xiz/fz, 1])
         elif self.filterType == 4 and f!=0: # Second order - Notch
-            self.num(list(1/f**2, 0, 1))
-            self.den(list(1/f**2, 2*xi/f, 1))
+            self.num([1/f**2, 0, 1])
+            self.den([1/f**2, 2*xi/f, 1])
         elif self.filterType == 5 and f!=0 and fz!=0: # Second order - Low Pass Notch
-            self.num(list(1/fz**2, 2*(xiz/fz), 1))
-            self.den(list(1/f**2, 2*(xi/f), 1))
+            self.num([1/fz**2, 2*(xiz/fz), 1])
+            self.den([1/f**2, 2*(xi/f), 1])
         elif self.filterType == 6 and fz != 0 and f!=0: # Second order - High Pass Notch
-            self.num(list(1/fz**2, 2*(xiz/fz), 1))
-            self.den(list(1/f**2, 2*(xi/f), 1))
+            self.num([1/fz**2, 2*(xiz/fz), 1])
+            self.den([1/f**2, 2*(xi/f), 1])
     
     def set_sup(self):
         if self.numSuperior != '':
             num, self.numOrder = self.poly_to_tuple(self.numSuperior)
-            self.num(num)        
+            if self.numOrder == 0:
+                return False
+            else:
+                self.num(num)        
         if self.denSuperior != '':
             den, self.denOrder = self.poly_to_tuple(self.denSuperior)
-            self.den(den)
-
-        #if len(self.Hs[0]) > len(self.Hs[1]):
-        #    num_zeros = len(self.Hs[0]) - len(self.Hs[1])
-        #    self.Hs[1] = [0] * num_zeros + self.Hs[1]
-        #elif len(self.Hs[0]) < len(self.Hs[1]):
-        #    num_zeros = len(self.Hs[1]) - len(self.Hs[0])
-        #    self.Hs[0] = [0] * num_zeros + self.Hs[0]
-
-        print('NUM:', self.Hs[0])
-        print('DEN:', self.Hs[1])
-        
+            if self.denOrder == 0:
+                return False
+            else:
+                self.den(den)
 
     def poly_to_tuple(self, string):
         substring = string.replace('^', '**')
@@ -113,7 +107,10 @@ class filtro:
                 substring = substring.split("+", 1)[1].strip() if '+' in substring else ''        
 
         if substring:
-            coeffs.append(float(substring))
+            if substring[0] != 's':
+                coeffs.append(float(substring))
+            else:
+                return [1], 0
         else:
             coeffs.append(0)
         return coeffs, degree
@@ -162,8 +159,8 @@ class filtro:
     def gain(self):
         if self.gainType == 1:
             k = 10 ** (self.gainBW/20)
-            self.num(list(k * element for element in self.Hs[0]))
+            self.num([k * element for element in self.Hs[0]])
         elif self.gainType == 2:
             maxValue = max(self.Hdb)
             k = 10 ** ((self.gainMax-maxValue)/20)     
-            self.num(list(k * element for element in self.Hs[0]))   
+            self.num([k * element for element in self.Hs[0]])   

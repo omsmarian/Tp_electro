@@ -57,6 +57,7 @@ class PlotEntrada(PlotCanvas):
         self.setUp(prefix)
         self.axes.plot(t, yEntrada, color = 'red', label = 'Señal de entrada')
         self.axes.plot(tout, ySalida, label = 'Señal de salida')
+        self.axes.legend(loc="upper left")
         self.fig.canvas.draw()
 
     def setUp(self, prefix):        

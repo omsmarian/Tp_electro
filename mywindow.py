@@ -83,10 +83,12 @@ class mywindow(QMainWindow, Ui_Ploter):
             self.datos.denSuperior = self.denominador.text()
             
         self.datos.filterOrder = self.getTabindex() + 1
+        
         if self.datos.update():
             self.updateinput()
             self.updateplots()
-    
+        else:
+            print('Error 2')
     #returns multiplier
     def get_multiplier(self, combobox):
         comboboxindex = combobox.currentIndex()
