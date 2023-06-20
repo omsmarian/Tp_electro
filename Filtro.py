@@ -92,6 +92,8 @@ class filtro:
 
     def poly_to_tuple(self, string):
         substring = string.replace('^', '**')
+        substring = string.replace(' ','')
+        substring = string.replace('x','s')
         degree = self.match(substring)
         coeffs = []
 
