@@ -26,7 +26,7 @@ class filtro:
         self.realPoles = np.real(self.poles)
         self.imagPoles = np.imag(self.poles)
 
-        return 1             #TODO: devolver flag si hay error
+        return True             #TODO: devolver flag si hay error
     
     def updateTF(self):
         self.sys = signal.TransferFunction(self.Hs[0],self.Hs[1])

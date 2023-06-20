@@ -88,7 +88,8 @@ class mywindow(QMainWindow, Ui_Ploter):
             self.updateinput()
             self.updateplots()
         else:
-            print('Error 2')
+            self.errorWindowpopup()
+
     #returns multiplier
     def get_multiplier(self, combobox):
         comboboxindex = combobox.currentIndex()
@@ -258,3 +259,12 @@ class mywindow(QMainWindow, Ui_Ploter):
         self.bodefaseplt.setUp()
         self.cerospolosplt.setUp()
         self.entradaplt.setUp('')
+        
+    def errorWindowpopup(self):
+        window = QMessageBox()
+        window.setWindowTitle("Error")
+        window.setText("Revisar parametros")
+        window.setIcon(QMessageBox.Warning)
+        window.setWindowIcon(QtGui.QIcon('descarga.jpg'))
+        
+        run = window.exec_()
