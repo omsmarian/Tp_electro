@@ -8,7 +8,6 @@
 .git
 
 # Ignore compiled binaries and libraries
-*.exe
 *.dll
 *.so
 *.dylib
