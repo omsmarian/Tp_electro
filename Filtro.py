@@ -6,6 +6,7 @@ class filtro:
 
     def __init__(self):
         self.setUp()
+
     def num(self, newNum):
         self.Hs[0] = newNum
 
@@ -20,6 +21,8 @@ class filtro:
         else:
             if self.set_sup() == False or self.denOrder < self.numOrder:
                 return False
+            print('Num:' , self.Hs[0])
+            print('Den: ', self.Hs[1])
         self.updateTF()
         self.realZeros = np.real(self.zeros)
         self.imagZeros = np.imag(self.zeros)
@@ -30,6 +33,7 @@ class filtro:
     
     def updateTF(self):
         self.sys = signal.TransferFunction(self.Hs[0],self.Hs[1])
+        self.w, self.Hdb, self.phi = signal.bode(self.sys)
         self.gain()
         self.sys = signal.TransferFunction(self.Hs[0],self.Hs[1])
         self.w, self.Hdb, self.phi = signal.bode(self.sys)
@@ -92,27 +96,34 @@ class filtro:
 
     def poly_to_tuple(self, string):
         substring = string.replace('^', '**')
-        substring = string.replace(' ','')
-        substring = string.replace('x','s')
+        substring = substring.replace(' ','')
+        substring = substring.replace('x','s')
         degree = self.match(substring)
         coeffs = []
 
         for i in range(degree):
             power = self.match(substring)
             if power + i != degree:
-                coeffs.insert(i, 0)                
+                if degree - i == 1:
+                    if substring[0] == 's':
+                        coeffs.insert(i, 1)
+                    else:
+                        coeffs.insert(i, float(substring.split("*", 1)[0].strip()))
+                    substring = substring.split("+", 1)[1].strip() if '+' in substring else ''
+                else:           
+                    coeffs.insert(i, 0)    
             else:
-                if substring[0] == '0':
+                if substring[0] == '0': 
                     coeffs.insert(i, 0)
                 else:
-                    coeffs.insert(i, float(substring.split("*", 1)[0].strip()))
+                    if substring[0] == 's':
+                        coeffs.insert(i, 1)
+                    else:
+                        coeffs.insert(i, float(substring.split("*", 1)[0].strip()))
                 substring = substring.split("+", 1)[1].strip() if '+' in substring else ''        
 
         if substring:
-            if substring[0] != 's':
-                coeffs.append(float(substring))
-            else:
-                return [1], 0
+            coeffs.append(float(substring))
         else:
             coeffs.append(0)
         return coeffs, degree
