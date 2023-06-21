@@ -71,6 +71,8 @@ class filtro:
             self.num([0, 1, 0])
             self.den([1/fz**2, 2*xiz/fz, 1])
         elif self.filterType == 4 and f!=0: # Second order - Notch
+            if xi == 0:
+                xi = 0.001
             self.num([1/f**2, 0, 1])
             self.den([1/f**2, 2*xi/f, 1])
         elif self.filterType == 5 and f!=0 and fz!=0: # Second order - Low Pass Notch
