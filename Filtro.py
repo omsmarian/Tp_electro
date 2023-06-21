@@ -98,29 +98,35 @@ class filtro:
         substring = string.replace('^', '**')
         substring = substring.replace(' ','')
         substring = substring.replace('x','s')
+        substring = substring.replace(',','.')
         degree = self.match(substring)
         coeffs = []
 
-        for i in range(degree):
-            power = self.match(substring)
-            if power + i != degree:
-                if degree - i == 1:
-                    if substring[0] == 's':
-                        coeffs.insert(i, 1)
-                    else:
-                        coeffs.insert(i, float(substring.split("*", 1)[0].strip()))
-                    substring = substring.split("+", 1)[1].strip() if '+' in substring else ''
-                else:           
-                    coeffs.insert(i, 0)    
-            else:
-                if substring[0] == '0': 
-                    coeffs.insert(i, 0)
+        if degree != 0:
+            for i in range(degree):
+                power = self.match(substring)
+                if power + i != degree:
+                    if degree - i == 1:
+                        if substring[0] == 's':
+                            coeffs.insert(i, 1)
+                        else:
+                            coeffs.insert(i, float(substring.split("*", 1)[0].strip()))
+                        substring = substring.split("+", 1)[1].strip() if '+' in substring else ''
+                        if substring == '':
+                            substring = '0'
+                    else:           
+                        coeffs.insert(i, 0)    
                 else:
-                    if substring[0] == 's':
-                        coeffs.insert(i, 1)
+                    if substring[0] == '0': 
+                        coeffs.insert(i, 0)
                     else:
-                        coeffs.insert(i, float(substring.split("*", 1)[0].strip()))
-                substring = substring.split("+", 1)[1].strip() if '+' in substring else ''        
+                        if substring[0] == 's':
+                            coeffs.insert(i, 1)
+                        else:
+                            coeffs.insert(i, float(substring.split("*", 1)[0].strip()))
+                    substring = substring.split("+", 1)[1].strip() if '+' in substring else ''
+                    if substring == '':
+                        substring = '0'   
 
         if substring:
             coeffs.append(float(substring))
@@ -129,15 +135,20 @@ class filtro:
         return coeffs, degree
 
     def match(self, string):
-        match = re.search(r'\*\*(\w+)', string) 
-        if match:
-            return int(match.group(1))
-        else:
-            match = re.search(r'(\d+(?:\.\d+)?)\s*\*\s*s', string)  
+        if '**' in string:
+            match = re.search(r'\*\*(\w+)', string) 
             if match:
-                return 1
+                return int(match.group(1))
             else:
-                return 0
+                match = re.search(r'(\d+(?:\.\d+)?)\s*\*\s*s', string)  
+                if match:
+                    return 1
+                else:
+                    return 0
+        elif 's' in string:
+            return 1
+        else:
+            return 0
             
     def setUp(self):
         self.filterOrder = 1

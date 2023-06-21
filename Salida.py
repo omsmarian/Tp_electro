@@ -83,7 +83,7 @@ class salida:
         self.input = self.amp * np.sin(2*np.pi*self.f*self.t)
     
     def pulse(self, period):
-        self.input = self.amp * (1 + signal.square(self.t-period/10, 0.5)) / 2
+        self.input = self.amp * np.heaviside(self.t, 1)
 
     def periodic_pulse(self):
         self.input = self.amp * signal.square(2*np.pi*self.f*self.t, 0.5)

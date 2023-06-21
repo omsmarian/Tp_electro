@@ -77,6 +77,7 @@ class PlotCerosPolos(PlotCanvas):
         self.setUp()
         self.axes.scatter(realCeros, imagCeros, marker = 'o', color = 'blue', label = 'Ceros')
         self.axes.scatter(realPolos, imagPolos, marker = 'x', color = 'red', label = 'Polos')
+        self.axes.legend(loc="upper left")
         self.fig.canvas.draw()
 
     def setUp(self):

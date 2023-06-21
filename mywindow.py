@@ -39,6 +39,16 @@ class mywindow(QMainWindow, Ui_Ploter):
     
     #deja escribir o no en base al index
     def lineeditcheck(self, combobox):
+        self.fp2.show()
+        self.fp2label.show()
+        self.psip.show()
+        self.psiplabel.show()
+        self.fo2.show()
+        self.fo2label.show()
+        self.psio.show()
+        self.psiolabel.show()
+        self.unitfo2.show()
+        self.unitfp2.show()
         if combobox.currentIndex() == 3:
             self.fp2.clear()
             self.psip.clear()
@@ -46,6 +56,11 @@ class mywindow(QMainWindow, Ui_Ploter):
             self.psip.setReadOnly(True)
             self.fo2.setReadOnly(False)
             self.psio.setReadOnly(False)
+            self.fp2.hide()
+            self.fp2label.hide()
+            self.unitfp2.hide()
+            self.psip.hide()
+            self.psiplabel.hide()
             self.changename(False)
         elif combobox.currentIndex() == 5 or combobox.currentIndex() == 6:
             self.clearall2()
@@ -61,6 +76,11 @@ class mywindow(QMainWindow, Ui_Ploter):
             self.psio.setReadOnly(True)
             self.fo2.setReadOnly(True)
             self.fp2.setReadOnly(False)
+            self.fo2.hide()
+            self.fo2label.hide()
+            self.unitfo2.hide()
+            self.psio.hide()
+            self.psiolabel.hide()
             self.psip.setReadOnly(False)
         self.updateparams(self.getTabindex())
 
@@ -87,7 +107,7 @@ class mywindow(QMainWindow, Ui_Ploter):
         if self.datos.update():
             self.updateinput()
             self.updateplots()
-        else:
+        elif self.datos.denSuperior != '':
             self.errorWindowpopup()
 
     #returns multiplier
